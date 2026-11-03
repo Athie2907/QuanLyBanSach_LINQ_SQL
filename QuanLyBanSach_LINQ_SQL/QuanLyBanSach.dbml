@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="db_QuanLyBanSach" Class="QuanLyBanSachDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=Athie\SQLEXPRESS;Initial Catalog=db_QuanLyBanSach;Integrated Security=True;Encrypt=False;Trust Server Certificate=True" SettingsObjectName="QuanLyBanSach_LINQ_SQL.Properties.Settings" SettingsPropertyName="db_QuanLyBanSachConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.tbl_chi_tiet_hoa_don" Member="tbl_chi_tiet_hoa_dons">
+    <Type Name="tbl_chi_tiet_hoa_don">
+      <Column Name="ma_hoa_don" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ma_sach" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="so_luong" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="tbl_hoa_don_tbl_chi_tiet_hoa_don" Member="tbl_hoa_don" ThisKey="ma_hoa_don" OtherKey="ma_hoa_don" Type="tbl_hoa_don" IsForeignKey="true" />
+      <Association Name="tbl_sach_tbl_chi_tiet_hoa_don" Member="tbl_sach" ThisKey="ma_sach" OtherKey="ma_sach" Type="tbl_sach" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_chi_tiet_phieu_nhap" Member="tbl_chi_tiet_phieu_nhaps">
+    <Type Name="tbl_chi_tiet_phieu_nhap">
+      <Column Name="ma_phieu_nhap" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ma_sach" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="so_luong" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="tbl_phieu_nhap_tbl_chi_tiet_phieu_nhap" Member="tbl_phieu_nhap" ThisKey="ma_phieu_nhap" OtherKey="ma_phieu_nhap" Type="tbl_phieu_nhap" IsForeignKey="true" />
+      <Association Name="tbl_sach_tbl_chi_tiet_phieu_nhap" Member="tbl_sach" ThisKey="ma_sach" OtherKey="ma_sach" Type="tbl_sach" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_hoa_don" Member="tbl_hoa_dons">
+    <Type Name="tbl_hoa_don">
+      <Column Name="ma_hoa_don" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ngay_lap_hoa_don" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="ten_khach_hang" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="sdt_khach_hang" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Association Name="tbl_hoa_don_tbl_chi_tiet_hoa_don" Member="tbl_chi_tiet_hoa_dons" ThisKey="ma_hoa_don" OtherKey="ma_hoa_don" Type="tbl_chi_tiet_hoa_don" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_loai_sach" Member="tbl_loai_saches">
+    <Type Name="tbl_loai_sach">
+      <Column Name="ma_loai_sach" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ten_loai_sach" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="tbl_loai_sach_tbl_sach" Member="tbl_saches" ThisKey="ma_loai_sach" OtherKey="ma_loai_sach" Type="tbl_sach" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_phieu_nhap" Member="tbl_phieu_nhaps">
+    <Type Name="tbl_phieu_nhap">
+      <Column Name="ma_phieu_nhap" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ngay_lap_phieu_nhap" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="ten_nha_cung_cap" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Association Name="tbl_phieu_nhap_tbl_chi_tiet_phieu_nhap" Member="tbl_chi_tiet_phieu_nhaps" ThisKey="ma_phieu_nhap" OtherKey="ma_phieu_nhap" Type="tbl_chi_tiet_phieu_nhap" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_sach" Member="tbl_saches">
+    <Type Name="tbl_sach">
+      <Column Name="ma_sach" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ten_sach" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="ma_loai_sach" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="tac_gia" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="so_luong" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="gia_ban" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Association Name="tbl_sach_tbl_chi_tiet_hoa_don" Member="tbl_chi_tiet_hoa_dons" ThisKey="ma_sach" OtherKey="ma_sach" Type="tbl_chi_tiet_hoa_don" />
+      <Association Name="tbl_sach_tbl_chi_tiet_phieu_nhap" Member="tbl_chi_tiet_phieu_nhaps" ThisKey="ma_sach" OtherKey="ma_sach" Type="tbl_chi_tiet_phieu_nhap" />
+      <Association Name="tbl_loai_sach_tbl_sach" Member="tbl_loai_sach" ThisKey="ma_loai_sach" OtherKey="ma_loai_sach" Type="tbl_loai_sach" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
