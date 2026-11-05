@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="db_QuanLyBanSach" Class="QuanLyBanSachDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=Athie\SQLEXPRESS;Initial Catalog=db_QuanLyBanSach;Integrated Security=True;Encrypt=False;Trust Server Certificate=True" SettingsObjectName="QuanLyBanSach_LINQ_SQL.Properties.Settings" SettingsPropertyName="db_QuanLyBanSachConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=Athie\SQLEXPRESS;Initial Catalog=db_QuanLyBanSach;Integrated Security=True;Trust Server Certificate=True" SettingsObjectName="QuanLyBanSach_LINQ_SQL.Properties.Settings" SettingsPropertyName="db_QuanLyBanSachConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.tbl_chi_tiet_hoa_don" Member="tbl_chi_tiet_hoa_dons">
     <Type Name="tbl_chi_tiet_hoa_don">
       <Column Name="ma_hoa_don" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -53,6 +53,43 @@
       <Association Name="tbl_sach_tbl_chi_tiet_hoa_don" Member="tbl_chi_tiet_hoa_dons" ThisKey="ma_sach" OtherKey="ma_sach" Type="tbl_chi_tiet_hoa_don" />
       <Association Name="tbl_sach_tbl_chi_tiet_phieu_nhap" Member="tbl_chi_tiet_phieu_nhaps" ThisKey="ma_sach" OtherKey="ma_sach" Type="tbl_chi_tiet_phieu_nhap" />
       <Association Name="tbl_loai_sach_tbl_sach" Member="tbl_loai_sach" ThisKey="ma_loai_sach" OtherKey="ma_loai_sach" Type="tbl_loai_sach" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_nguoi_dung" Member="tbl_nguoi_dungs">
+    <Type Name="tbl_nguoi_dung">
+      <Column Name="ma_nguoi_dung" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ten_dang_nhap" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="mat_khau_hash" Type="System.String" DbType="Char(64) NOT NULL" CanBeNull="false" />
+      <Column Name="salt" Type="System.String" DbType="Char(32) NOT NULL" CanBeNull="false" />
+      <Column Name="ho_ten" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="ma_phan_quyen" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="trang_thai" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ngay_tao" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="tbl_phan_quyen_tbl_nguoi_dung" Member="tbl_phan_quyen" ThisKey="ma_phan_quyen" OtherKey="ma_phan_quyen" Type="tbl_phan_quyen" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_phan_quyen" Member="tbl_phan_quyens">
+    <Type Name="tbl_phan_quyen">
+      <Column Name="ma_phan_quyen" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ten_phan_quyen" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="tbl_phan_quyen_tbl_nguoi_dung" Member="tbl_nguoi_dungs" ThisKey="ma_phan_quyen" OtherKey="ma_phan_quyen" Type="tbl_nguoi_dung" />
+      <Association Name="tbl_phan_quyen_tbl_phan_quyen_chuc_nang" Member="tbl_phan_quyen_chuc_nangs" ThisKey="ma_phan_quyen" OtherKey="ma_phan_quyen" Type="tbl_phan_quyen_chuc_nang" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_phan_quyen_chuc_nang" Member="tbl_phan_quyen_chuc_nangs">
+    <Type Name="tbl_phan_quyen_chuc_nang">
+      <Column Name="ma_phan_quyen" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ma_chuc_nang" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="tbl_phan_quyen_tbl_phan_quyen_chuc_nang" Member="tbl_phan_quyen" ThisKey="ma_phan_quyen" OtherKey="ma_phan_quyen" Type="tbl_phan_quyen" IsForeignKey="true" />
+      <Association Name="tbl_chuc_nang_tbl_phan_quyen_chuc_nang" Member="tbl_chuc_nang" ThisKey="ma_chuc_nang" OtherKey="ma_chuc_nang" Type="tbl_chuc_nang" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_chuc_nang" Member="tbl_chuc_nangs">
+    <Type Name="tbl_chuc_nang">
+      <Column Name="ma_chuc_nang" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ma_chuc_nang_code" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ten_chuc_nang" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="tbl_chuc_nang_tbl_phan_quyen_chuc_nang" Member="tbl_phan_quyen_chuc_nangs" ThisKey="ma_chuc_nang" OtherKey="ma_chuc_nang" Type="tbl_phan_quyen_chuc_nang" />
     </Type>
   </Table>
 </Database>

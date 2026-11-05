@@ -48,10 +48,22 @@ namespace QuanLyBanSach_LINQ_SQL
     partial void Inserttbl_sach(tbl_sach instance);
     partial void Updatetbl_sach(tbl_sach instance);
     partial void Deletetbl_sach(tbl_sach instance);
+    partial void Inserttbl_nguoi_dung(tbl_nguoi_dung instance);
+    partial void Updatetbl_nguoi_dung(tbl_nguoi_dung instance);
+    partial void Deletetbl_nguoi_dung(tbl_nguoi_dung instance);
+    partial void Inserttbl_phan_quyen(tbl_phan_quyen instance);
+    partial void Updatetbl_phan_quyen(tbl_phan_quyen instance);
+    partial void Deletetbl_phan_quyen(tbl_phan_quyen instance);
+    partial void Inserttbl_phan_quyen_chuc_nang(tbl_phan_quyen_chuc_nang instance);
+    partial void Updatetbl_phan_quyen_chuc_nang(tbl_phan_quyen_chuc_nang instance);
+    partial void Deletetbl_phan_quyen_chuc_nang(tbl_phan_quyen_chuc_nang instance);
+    partial void Inserttbl_chuc_nang(tbl_chuc_nang instance);
+    partial void Updatetbl_chuc_nang(tbl_chuc_nang instance);
+    partial void Deletetbl_chuc_nang(tbl_chuc_nang instance);
     #endregion
 		
 		public QuanLyBanSachDataContext() : 
-				base(global::QuanLyBanSach_LINQ_SQL.Properties.Settings.Default.db_QuanLyBanSachConnectionString, mappingSource)
+				base(global::QuanLyBanSach_LINQ_SQL.Properties.Settings.Default.db_QuanLyBanSachConnectionString1, mappingSource)
 		{
 			OnCreated();
 		}
@@ -125,6 +137,38 @@ namespace QuanLyBanSach_LINQ_SQL
 			get
 			{
 				return this.GetTable<tbl_sach>();
+			}
+		}
+		
+		public System.Data.Linq.Table<tbl_nguoi_dung> tbl_nguoi_dungs
+		{
+			get
+			{
+				return this.GetTable<tbl_nguoi_dung>();
+			}
+		}
+		
+		public System.Data.Linq.Table<tbl_phan_quyen> tbl_phan_quyens
+		{
+			get
+			{
+				return this.GetTable<tbl_phan_quyen>();
+			}
+		}
+		
+		public System.Data.Linq.Table<tbl_phan_quyen_chuc_nang> tbl_phan_quyen_chuc_nangs
+		{
+			get
+			{
+				return this.GetTable<tbl_phan_quyen_chuc_nang>();
+			}
+		}
+		
+		public System.Data.Linq.Table<tbl_chuc_nang> tbl_chuc_nangs
+		{
+			get
+			{
+				return this.GetTable<tbl_chuc_nang>();
 			}
 		}
 	}
@@ -1203,6 +1247,725 @@ namespace QuanLyBanSach_LINQ_SQL
 		{
 			this.SendPropertyChanging();
 			entity.tbl_sach = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tbl_nguoi_dung")]
+	public partial class tbl_nguoi_dung : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ma_nguoi_dung;
+		
+		private string _ten_dang_nhap;
+		
+		private string _mat_khau_hash;
+		
+		private string _salt;
+		
+		private string _ho_ten;
+		
+		private int _ma_phan_quyen;
+		
+		private bool _trang_thai;
+		
+		private System.DateTime _ngay_tao;
+		
+		private EntityRef<tbl_phan_quyen> _tbl_phan_quyen;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void Onma_nguoi_dungChanging(int value);
+    partial void Onma_nguoi_dungChanged();
+    partial void Onten_dang_nhapChanging(string value);
+    partial void Onten_dang_nhapChanged();
+    partial void Onmat_khau_hashChanging(string value);
+    partial void Onmat_khau_hashChanged();
+    partial void OnsaltChanging(string value);
+    partial void OnsaltChanged();
+    partial void Onho_tenChanging(string value);
+    partial void Onho_tenChanged();
+    partial void Onma_phan_quyenChanging(int value);
+    partial void Onma_phan_quyenChanged();
+    partial void Ontrang_thaiChanging(bool value);
+    partial void Ontrang_thaiChanged();
+    partial void Onngay_taoChanging(System.DateTime value);
+    partial void Onngay_taoChanged();
+    #endregion
+		
+		public tbl_nguoi_dung()
+		{
+			this._tbl_phan_quyen = default(EntityRef<tbl_phan_quyen>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ma_nguoi_dung", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ma_nguoi_dung
+		{
+			get
+			{
+				return this._ma_nguoi_dung;
+			}
+			set
+			{
+				if ((this._ma_nguoi_dung != value))
+				{
+					this.Onma_nguoi_dungChanging(value);
+					this.SendPropertyChanging();
+					this._ma_nguoi_dung = value;
+					this.SendPropertyChanged("ma_nguoi_dung");
+					this.Onma_nguoi_dungChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ten_dang_nhap", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string ten_dang_nhap
+		{
+			get
+			{
+				return this._ten_dang_nhap;
+			}
+			set
+			{
+				if ((this._ten_dang_nhap != value))
+				{
+					this.Onten_dang_nhapChanging(value);
+					this.SendPropertyChanging();
+					this._ten_dang_nhap = value;
+					this.SendPropertyChanged("ten_dang_nhap");
+					this.Onten_dang_nhapChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_mat_khau_hash", DbType="Char(64) NOT NULL", CanBeNull=false)]
+		public string mat_khau_hash
+		{
+			get
+			{
+				return this._mat_khau_hash;
+			}
+			set
+			{
+				if ((this._mat_khau_hash != value))
+				{
+					this.Onmat_khau_hashChanging(value);
+					this.SendPropertyChanging();
+					this._mat_khau_hash = value;
+					this.SendPropertyChanged("mat_khau_hash");
+					this.Onmat_khau_hashChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_salt", DbType="Char(32) NOT NULL", CanBeNull=false)]
+		public string salt
+		{
+			get
+			{
+				return this._salt;
+			}
+			set
+			{
+				if ((this._salt != value))
+				{
+					this.OnsaltChanging(value);
+					this.SendPropertyChanging();
+					this._salt = value;
+					this.SendPropertyChanged("salt");
+					this.OnsaltChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ho_ten", DbType="NVarChar(100)")]
+		public string ho_ten
+		{
+			get
+			{
+				return this._ho_ten;
+			}
+			set
+			{
+				if ((this._ho_ten != value))
+				{
+					this.Onho_tenChanging(value);
+					this.SendPropertyChanging();
+					this._ho_ten = value;
+					this.SendPropertyChanged("ho_ten");
+					this.Onho_tenChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ma_phan_quyen", DbType="Int NOT NULL")]
+		public int ma_phan_quyen
+		{
+			get
+			{
+				return this._ma_phan_quyen;
+			}
+			set
+			{
+				if ((this._ma_phan_quyen != value))
+				{
+					if (this._tbl_phan_quyen.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onma_phan_quyenChanging(value);
+					this.SendPropertyChanging();
+					this._ma_phan_quyen = value;
+					this.SendPropertyChanged("ma_phan_quyen");
+					this.Onma_phan_quyenChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_trang_thai", DbType="Bit NOT NULL")]
+		public bool trang_thai
+		{
+			get
+			{
+				return this._trang_thai;
+			}
+			set
+			{
+				if ((this._trang_thai != value))
+				{
+					this.Ontrang_thaiChanging(value);
+					this.SendPropertyChanging();
+					this._trang_thai = value;
+					this.SendPropertyChanged("trang_thai");
+					this.Ontrang_thaiChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ngay_tao", DbType="DateTime NOT NULL")]
+		public System.DateTime ngay_tao
+		{
+			get
+			{
+				return this._ngay_tao;
+			}
+			set
+			{
+				if ((this._ngay_tao != value))
+				{
+					this.Onngay_taoChanging(value);
+					this.SendPropertyChanging();
+					this._ngay_tao = value;
+					this.SendPropertyChanged("ngay_tao");
+					this.Onngay_taoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tbl_phan_quyen_tbl_nguoi_dung", Storage="_tbl_phan_quyen", ThisKey="ma_phan_quyen", OtherKey="ma_phan_quyen", IsForeignKey=true)]
+		public tbl_phan_quyen tbl_phan_quyen
+		{
+			get
+			{
+				return this._tbl_phan_quyen.Entity;
+			}
+			set
+			{
+				tbl_phan_quyen previousValue = this._tbl_phan_quyen.Entity;
+				if (((previousValue != value) 
+							|| (this._tbl_phan_quyen.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._tbl_phan_quyen.Entity = null;
+						previousValue.tbl_nguoi_dungs.Remove(this);
+					}
+					this._tbl_phan_quyen.Entity = value;
+					if ((value != null))
+					{
+						value.tbl_nguoi_dungs.Add(this);
+						this._ma_phan_quyen = value.ma_phan_quyen;
+					}
+					else
+					{
+						this._ma_phan_quyen = default(int);
+					}
+					this.SendPropertyChanged("tbl_phan_quyen");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tbl_phan_quyen")]
+	public partial class tbl_phan_quyen : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ma_phan_quyen;
+		
+		private string _ten_phan_quyen;
+		
+		private EntitySet<tbl_nguoi_dung> _tbl_nguoi_dungs;
+		
+		private EntitySet<tbl_phan_quyen_chuc_nang> _tbl_phan_quyen_chuc_nangs;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void Onma_phan_quyenChanging(int value);
+    partial void Onma_phan_quyenChanged();
+    partial void Onten_phan_quyenChanging(string value);
+    partial void Onten_phan_quyenChanged();
+    #endregion
+		
+		public tbl_phan_quyen()
+		{
+			this._tbl_nguoi_dungs = new EntitySet<tbl_nguoi_dung>(new Action<tbl_nguoi_dung>(this.attach_tbl_nguoi_dungs), new Action<tbl_nguoi_dung>(this.detach_tbl_nguoi_dungs));
+			this._tbl_phan_quyen_chuc_nangs = new EntitySet<tbl_phan_quyen_chuc_nang>(new Action<tbl_phan_quyen_chuc_nang>(this.attach_tbl_phan_quyen_chuc_nangs), new Action<tbl_phan_quyen_chuc_nang>(this.detach_tbl_phan_quyen_chuc_nangs));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ma_phan_quyen", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ma_phan_quyen
+		{
+			get
+			{
+				return this._ma_phan_quyen;
+			}
+			set
+			{
+				if ((this._ma_phan_quyen != value))
+				{
+					this.Onma_phan_quyenChanging(value);
+					this.SendPropertyChanging();
+					this._ma_phan_quyen = value;
+					this.SendPropertyChanged("ma_phan_quyen");
+					this.Onma_phan_quyenChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ten_phan_quyen", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string ten_phan_quyen
+		{
+			get
+			{
+				return this._ten_phan_quyen;
+			}
+			set
+			{
+				if ((this._ten_phan_quyen != value))
+				{
+					this.Onten_phan_quyenChanging(value);
+					this.SendPropertyChanging();
+					this._ten_phan_quyen = value;
+					this.SendPropertyChanged("ten_phan_quyen");
+					this.Onten_phan_quyenChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tbl_phan_quyen_tbl_nguoi_dung", Storage="_tbl_nguoi_dungs", ThisKey="ma_phan_quyen", OtherKey="ma_phan_quyen")]
+		public EntitySet<tbl_nguoi_dung> tbl_nguoi_dungs
+		{
+			get
+			{
+				return this._tbl_nguoi_dungs;
+			}
+			set
+			{
+				this._tbl_nguoi_dungs.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tbl_phan_quyen_tbl_phan_quyen_chuc_nang", Storage="_tbl_phan_quyen_chuc_nangs", ThisKey="ma_phan_quyen", OtherKey="ma_phan_quyen")]
+		public EntitySet<tbl_phan_quyen_chuc_nang> tbl_phan_quyen_chuc_nangs
+		{
+			get
+			{
+				return this._tbl_phan_quyen_chuc_nangs;
+			}
+			set
+			{
+				this._tbl_phan_quyen_chuc_nangs.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_tbl_nguoi_dungs(tbl_nguoi_dung entity)
+		{
+			this.SendPropertyChanging();
+			entity.tbl_phan_quyen = this;
+		}
+		
+		private void detach_tbl_nguoi_dungs(tbl_nguoi_dung entity)
+		{
+			this.SendPropertyChanging();
+			entity.tbl_phan_quyen = null;
+		}
+		
+		private void attach_tbl_phan_quyen_chuc_nangs(tbl_phan_quyen_chuc_nang entity)
+		{
+			this.SendPropertyChanging();
+			entity.tbl_phan_quyen = this;
+		}
+		
+		private void detach_tbl_phan_quyen_chuc_nangs(tbl_phan_quyen_chuc_nang entity)
+		{
+			this.SendPropertyChanging();
+			entity.tbl_phan_quyen = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tbl_phan_quyen_chuc_nang")]
+	public partial class tbl_phan_quyen_chuc_nang : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ma_phan_quyen;
+		
+		private int _ma_chuc_nang;
+		
+		private EntityRef<tbl_phan_quyen> _tbl_phan_quyen;
+		
+		private EntityRef<tbl_chuc_nang> _tbl_chuc_nang;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void Onma_phan_quyenChanging(int value);
+    partial void Onma_phan_quyenChanged();
+    partial void Onma_chuc_nangChanging(int value);
+    partial void Onma_chuc_nangChanged();
+    #endregion
+		
+		public tbl_phan_quyen_chuc_nang()
+		{
+			this._tbl_phan_quyen = default(EntityRef<tbl_phan_quyen>);
+			this._tbl_chuc_nang = default(EntityRef<tbl_chuc_nang>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ma_phan_quyen", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int ma_phan_quyen
+		{
+			get
+			{
+				return this._ma_phan_quyen;
+			}
+			set
+			{
+				if ((this._ma_phan_quyen != value))
+				{
+					if (this._tbl_phan_quyen.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onma_phan_quyenChanging(value);
+					this.SendPropertyChanging();
+					this._ma_phan_quyen = value;
+					this.SendPropertyChanged("ma_phan_quyen");
+					this.Onma_phan_quyenChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ma_chuc_nang", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int ma_chuc_nang
+		{
+			get
+			{
+				return this._ma_chuc_nang;
+			}
+			set
+			{
+				if ((this._ma_chuc_nang != value))
+				{
+					if (this._tbl_chuc_nang.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onma_chuc_nangChanging(value);
+					this.SendPropertyChanging();
+					this._ma_chuc_nang = value;
+					this.SendPropertyChanged("ma_chuc_nang");
+					this.Onma_chuc_nangChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tbl_phan_quyen_tbl_phan_quyen_chuc_nang", Storage="_tbl_phan_quyen", ThisKey="ma_phan_quyen", OtherKey="ma_phan_quyen", IsForeignKey=true)]
+		public tbl_phan_quyen tbl_phan_quyen
+		{
+			get
+			{
+				return this._tbl_phan_quyen.Entity;
+			}
+			set
+			{
+				tbl_phan_quyen previousValue = this._tbl_phan_quyen.Entity;
+				if (((previousValue != value) 
+							|| (this._tbl_phan_quyen.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._tbl_phan_quyen.Entity = null;
+						previousValue.tbl_phan_quyen_chuc_nangs.Remove(this);
+					}
+					this._tbl_phan_quyen.Entity = value;
+					if ((value != null))
+					{
+						value.tbl_phan_quyen_chuc_nangs.Add(this);
+						this._ma_phan_quyen = value.ma_phan_quyen;
+					}
+					else
+					{
+						this._ma_phan_quyen = default(int);
+					}
+					this.SendPropertyChanged("tbl_phan_quyen");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tbl_chuc_nang_tbl_phan_quyen_chuc_nang", Storage="_tbl_chuc_nang", ThisKey="ma_chuc_nang", OtherKey="ma_chuc_nang", IsForeignKey=true)]
+		public tbl_chuc_nang tbl_chuc_nang
+		{
+			get
+			{
+				return this._tbl_chuc_nang.Entity;
+			}
+			set
+			{
+				tbl_chuc_nang previousValue = this._tbl_chuc_nang.Entity;
+				if (((previousValue != value) 
+							|| (this._tbl_chuc_nang.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._tbl_chuc_nang.Entity = null;
+						previousValue.tbl_phan_quyen_chuc_nangs.Remove(this);
+					}
+					this._tbl_chuc_nang.Entity = value;
+					if ((value != null))
+					{
+						value.tbl_phan_quyen_chuc_nangs.Add(this);
+						this._ma_chuc_nang = value.ma_chuc_nang;
+					}
+					else
+					{
+						this._ma_chuc_nang = default(int);
+					}
+					this.SendPropertyChanged("tbl_chuc_nang");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tbl_chuc_nang")]
+	public partial class tbl_chuc_nang : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ma_chuc_nang;
+		
+		private string _ma_chuc_nang_code;
+		
+		private string _ten_chuc_nang;
+		
+		private EntitySet<tbl_phan_quyen_chuc_nang> _tbl_phan_quyen_chuc_nangs;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void Onma_chuc_nangChanging(int value);
+    partial void Onma_chuc_nangChanged();
+    partial void Onma_chuc_nang_codeChanging(string value);
+    partial void Onma_chuc_nang_codeChanged();
+    partial void Onten_chuc_nangChanging(string value);
+    partial void Onten_chuc_nangChanged();
+    #endregion
+		
+		public tbl_chuc_nang()
+		{
+			this._tbl_phan_quyen_chuc_nangs = new EntitySet<tbl_phan_quyen_chuc_nang>(new Action<tbl_phan_quyen_chuc_nang>(this.attach_tbl_phan_quyen_chuc_nangs), new Action<tbl_phan_quyen_chuc_nang>(this.detach_tbl_phan_quyen_chuc_nangs));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ma_chuc_nang", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ma_chuc_nang
+		{
+			get
+			{
+				return this._ma_chuc_nang;
+			}
+			set
+			{
+				if ((this._ma_chuc_nang != value))
+				{
+					this.Onma_chuc_nangChanging(value);
+					this.SendPropertyChanging();
+					this._ma_chuc_nang = value;
+					this.SendPropertyChanged("ma_chuc_nang");
+					this.Onma_chuc_nangChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ma_chuc_nang_code", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string ma_chuc_nang_code
+		{
+			get
+			{
+				return this._ma_chuc_nang_code;
+			}
+			set
+			{
+				if ((this._ma_chuc_nang_code != value))
+				{
+					this.Onma_chuc_nang_codeChanging(value);
+					this.SendPropertyChanging();
+					this._ma_chuc_nang_code = value;
+					this.SendPropertyChanged("ma_chuc_nang_code");
+					this.Onma_chuc_nang_codeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ten_chuc_nang", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string ten_chuc_nang
+		{
+			get
+			{
+				return this._ten_chuc_nang;
+			}
+			set
+			{
+				if ((this._ten_chuc_nang != value))
+				{
+					this.Onten_chuc_nangChanging(value);
+					this.SendPropertyChanging();
+					this._ten_chuc_nang = value;
+					this.SendPropertyChanged("ten_chuc_nang");
+					this.Onten_chuc_nangChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tbl_chuc_nang_tbl_phan_quyen_chuc_nang", Storage="_tbl_phan_quyen_chuc_nangs", ThisKey="ma_chuc_nang", OtherKey="ma_chuc_nang")]
+		public EntitySet<tbl_phan_quyen_chuc_nang> tbl_phan_quyen_chuc_nangs
+		{
+			get
+			{
+				return this._tbl_phan_quyen_chuc_nangs;
+			}
+			set
+			{
+				this._tbl_phan_quyen_chuc_nangs.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_tbl_phan_quyen_chuc_nangs(tbl_phan_quyen_chuc_nang entity)
+		{
+			this.SendPropertyChanging();
+			entity.tbl_chuc_nang = this;
+		}
+		
+		private void detach_tbl_phan_quyen_chuc_nangs(tbl_phan_quyen_chuc_nang entity)
+		{
+			this.SendPropertyChanging();
+			entity.tbl_chuc_nang = null;
 		}
 	}
 }

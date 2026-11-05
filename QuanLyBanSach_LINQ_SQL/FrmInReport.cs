@@ -32,5 +32,12 @@ namespace QuanLyBanSach_LINQ_SQL
         {
             // Bạn có thể thêm các xử lý khác khi form được tải tại đây nếu cần
         }
+
+        private void FrmInReport_Load_1(object sender, EventArgs e)
+        {
+
+            this.reportViewer1.RefreshReport();
+            this.reportViewer1.RefreshReport();
+        }
     }
 }

@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace QuanLyBanSach_LINQ_SQL
 {
-    public partial class Form1 : Form
+    public partial class FormGiaoDien : Form
     {
         private int? maLoaiSachDangChon = null;
         private int? maSachDangChon = null;
@@ -17,9 +17,118 @@ namespace QuanLyBanSach_LINQ_SQL
         private int? maSachChiTietHoaDonDangChon = null;
         private int? maSachChiTietPhieuNhapDangChon = null;
 
-        public Form1()
+        public string TenDangNhapHienTai { get; set; }
+
+        // Kiểm tra tài khoản hiện tại có được cấp chức năng hay không
+        // Kiểm tra tài khoản hiện tại có được cấp chức năng hay không
+        private bool KiemTraQuyen(string maChucNang)
+        {
+            try
+            {
+                using (QuanLyBanSachDataContext db =
+                    new QuanLyBanSachDataContext())
+                {
+                    var taiKhoan = db.tbl_nguoi_dungs
+                        .FirstOrDefault(x =>
+                            x.ten_dang_nhap == TenDangNhapHienTai);
+
+                    if (taiKhoan == null || !taiKhoan.trang_thai)
+                        return false;
+
+                    int maPhanQuyen = taiKhoan.ma_phan_quyen;
+
+                    return (
+                        from pq in db.tbl_phan_quyen_chuc_nangs
+                        join cn in db.tbl_chuc_nangs
+                            on pq.ma_chuc_nang equals cn.ma_chuc_nang
+                        where pq.ma_phan_quyen == maPhanQuyen
+                            && cn.ma_chuc_nang_code == maChucNang
+                        select pq
+                    ).Any();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi kiểm tra quyền: " + ex.Message);
+                return false;
+            }
+        }
+
+        private void ApDungPhanQuyen()
+        {
+            // Quản lý tài khoản và phân quyền
+            btnQuanLyTaiKhoan.Enabled =
+                KiemTraQuyen("QUAN_LY_TAI_KHOAN");
+
+            btnQuanLyPhanQuyen.Enabled =
+                KiemTraQuyen("QUAN_LY_PHAN_QUYEN");
+
+            // Đổi mật khẩu
+            btnMoDoiMatKhau.Enabled =
+                KiemTraQuyen("DOI_MAT_KHAU");
+
+            // Quản lý loại sách
+            bool quyenLoaiSach = KiemTraQuyen("QUAN_LY_LOAI_SACH");
+            btnLoaiSachThem.Enabled = quyenLoaiSach;
+            btnLoaiSachSua.Enabled = quyenLoaiSach;
+            btnLoaiSachXoa.Enabled = quyenLoaiSach;
+
+            // Quản lý sách
+            bool quyenSach = KiemTraQuyen("QUAN_LY_SACH");
+            btnSachThem.Enabled = quyenSach;
+            btnSachSua.Enabled = quyenSach;
+            btnSachXoa.Enabled = quyenSach;
+
+            // Quản lý hóa đơn
+            bool quyenHoaDon = KiemTraQuyen("QUAN_LY_HOA_DON");
+            btnHoaDonThem.Enabled = quyenHoaDon;
+            btnHoaDonSua.Enabled = quyenHoaDon;
+            btnHoaDonXoa.Enabled = quyenHoaDon;
+
+            // Chi tiết hóa đơn
+            bool quyenChiTietHoaDon =
+                KiemTraQuyen("QUAN_LY_CHI_TIET_HOA_DON");
+
+            btnChiTietHoaDonThem.Enabled = quyenChiTietHoaDon;
+            btnChiTietHoaDonXoa.Enabled = quyenChiTietHoaDon;
+
+            // Quản lý phiếu nhập
+            bool quyenPhieuNhap = KiemTraQuyen("QUAN_LY_PHIEU_NHAP");
+            btnPhieuNhapThem.Enabled = quyenPhieuNhap;
+            btnPhieuNhapSua.Enabled = quyenPhieuNhap;
+            btnPhieuNhapXoa.Enabled = quyenPhieuNhap;
+
+            // Chi tiết phiếu nhập
+            bool quyenChiTietPhieuNhap =
+                KiemTraQuyen("QUAN_LY_CHI_TIET_PHIEU_NHAP");
+
+            btnChiTietPhieuNhapThem.Enabled = quyenChiTietPhieuNhap;
+            btnChiTietPhieuNhapXoa.Enabled = quyenChiTietPhieuNhap;
+
+            // In báo cáo
+            bool quyenInBaoCao = KiemTraQuyen("IN_BAO_CAO");
+            btnInHoaDon.Enabled = quyenInBaoCao;
+            btnInPhieuNhap.Enabled = quyenInBaoCao;
+
+        }
+        private void FormGiaoDien_Shown(object sender, EventArgs e)
+        {
+            ApDungPhanQuyen();
+        }
+
+
+        public FormGiaoDien()
         {
             InitializeComponent();
+            btnQuanLyTaiKhoan.Click += btnQuanLyTaiKhoan_Click;
+            btnMoDoiMatKhau.Click += btnMoDoiMatKhau_Click;
+
+            this.Shown += FormGiaoDien_Shown;
+
+            dgSach.AutoGenerateColumns = false;
+            dgChiTietHoaDon.AutoGenerateColumns = false;
+            dgPhieuNhap.AutoGenerateColumns = false;
+            dgChiTietPhieuNhap.AutoGenerateColumns = false;
 
             KiemTraKetNoi();
             // Gắn sự kiện cho các nút Loại Sách
@@ -28,7 +137,7 @@ namespace QuanLyBanSach_LINQ_SQL
             btnLoaiSachXoa.Click += btnLoaiSachXoa_Click;
 
             // Gắn sự kiện chọn dòng
-            dgLoaiSach.CellClick += dataGridView1_CellClick;
+            dgLoaiSach.CellClick += dgLoaiSach_CellClick;
 
             // Cấu hình bảng
             dgLoaiSach.AutoSizeColumnsMode =
@@ -42,12 +151,12 @@ namespace QuanLyBanSach_LINQ_SQL
             LoadLoaiSach();
 
             // Gắn sự kiện cho các nút Sách
-            btnSachThem.Click += btnSachThem_Click;
-            btnSachSua.Click += btnSachSua_Click;
-            btnSachXoa.Click += btnSachXoa_Click;
+            btnSachThem.Click += btnSachThem_Click_1;
+            btnSachSua.Click += btnSachSua_Click_1;
+            btnSachXoa.Click += btnSachXoa_Click_1;
 
             // Gắn sự kiện chọn dòng sách
-            dgSach.CellClick += dgSach_CellClick;
+            dgSach.CellClick += dgSach_CellClick_1;
 
             // Cấu hình bảng sách
             dgSach.AutoSizeColumnsMode =
@@ -89,9 +198,8 @@ namespace QuanLyBanSach_LINQ_SQL
             dgPhieuNhap.MultiSelect = false;
 
             LoadPhieuNhap();
-
-            // --- BỔ SUNG GẮN SỰ KIỆN CHO CHI TIẾT HÓA ĐƠN & PHIẾU NHẬP ---
             LoadComboBoxSachChiTiet();
+            
 
             if (dgChiTietHoaDon != null)
             {
@@ -122,6 +230,9 @@ namespace QuanLyBanSach_LINQ_SQL
             if (btnInPhieuNhap != null) btnInPhieuNhap.Click += btnInPhieuNhap_Click;
         }
 
+
+
+
         private void KiemTraKetNoi()
         {
             try
@@ -146,7 +257,7 @@ namespace QuanLyBanSach_LINQ_SQL
                 MessageBox.Show("Lỗi kết nối: " + ex.Message);
             }
         }
-
+        //-----LOẠI SÁCH-----
         // Hiển thị danh sách loại sách
         private void LoadLoaiSach()
         {
@@ -179,8 +290,7 @@ namespace QuanLyBanSach_LINQ_SQL
         }
 
         // Chọn một dòng trong DataGridView
-        private void dataGridView1_CellClick(
-            object sender, DataGridViewCellEventArgs e)
+        private void dgLoaiSach_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
@@ -188,17 +298,16 @@ namespace QuanLyBanSach_LINQ_SQL
                     dgLoaiSach.Rows[e.RowIndex];
 
                 maLoaiSachDangChon = Convert.ToInt32(
-                    row.Cells["MaLoaiSach"].Value
+                    row.Cells["ma_loai_sach"].Value
                 );
 
-                txtLoaiSachTen.Text =
-                    row.Cells["TenLoaiSach"].Value?.ToString();
+                txtLoaiSachTen.Text = 
+                    row.Cells["ten_loai_sach"].Value?.ToString() ?? "";
             }
         }
 
         // Thêm loại sách
-        private void btnLoaiSachThem_Click(
-    object sender, EventArgs e)
+        private void btnLoaiSachThem_Click(object sender, EventArgs e)
         {
             string tenLoaiSach = txtLoaiSachTen.Text.Trim();
 
@@ -242,10 +351,8 @@ namespace QuanLyBanSach_LINQ_SQL
                 MessageBox.Show("Lỗi thêm loại sách: " + ex.Message);
             }
         }
-
         // Sửa loại sách
-        private void btnLoaiSachSua_Click(
-    object sender, EventArgs e)
+        private void btnLoaiSachSua_Click(object sender, EventArgs e)
         {
             if (maLoaiSachDangChon == null)
             {
@@ -301,10 +408,8 @@ namespace QuanLyBanSach_LINQ_SQL
                 MessageBox.Show("Lỗi sửa loại sách: " + ex.Message);
             }
         }
-
         // Xóa loại sách
-        private void btnLoaiSachXoa_Click(
-    object sender, EventArgs e)
+        private void btnLoaiSachXoa_Click(object sender, EventArgs e)
         {
             if (maLoaiSachDangChon == null)
             {
@@ -357,6 +462,7 @@ namespace QuanLyBanSach_LINQ_SQL
             }
         }
 
+        
         // Làm trống ô nhập liệu
         private void LamMoiLoaiSach()
         {
@@ -389,6 +495,7 @@ namespace QuanLyBanSach_LINQ_SQL
                 );
             }
         }
+        //-----SÁCH-----
         private void LoadSach()
         {
             try
@@ -402,9 +509,7 @@ namespace QuanLyBanSach_LINQ_SQL
                             x.ma_sach,
                             x.ten_sach,
 
-                            TenLoaiSach = x.tbl_loai_sach != null
-                                ? x.tbl_loai_sach.ten_loai_sach
-                                : "Chưa phân loại",
+                            ten_loai_sach = x.tbl_loai_sach != null ? x.tbl_loai_sach.ten_loai_sach : "Chưa phân loại",
 
                             x.tac_gia,
                             x.so_luong,
@@ -412,27 +517,53 @@ namespace QuanLyBanSach_LINQ_SQL
                         })
                         .ToList();
 
+                    dgSach.AutoGenerateColumns = false;
+
+                    // Gán dữ liệu cho DataGridView
                     dgSach.DataSource = danhSach;
 
-                    dgSach.Columns["ma_sach"].HeaderText = "Mã Sách";
-                    dgSach.Columns["ten_sach"].HeaderText = "Tên Sách";
-                    dgSach.Columns["TenLoaiSach"].HeaderText = "Loại Sách";
-                    dgSach.Columns["tac_gia"].HeaderText = "Tác Giả";
-                    dgSach.Columns["so_luong"].HeaderText = "Số Lượng";
-                    dgSach.Columns["gia_ban"].HeaderText = "Giá Bán";
+                    // Đặt tiêu đề và định dạng cột
+                    foreach (DataGridViewColumn col in dgSach.Columns)
+                    {
+                        string tenCot = col.DataPropertyName;
 
-                    dgSach.Columns["gia_ban"].DefaultCellStyle.Format = "N0";
+                        switch (tenCot)
+                        {
+                            case "ma_sach":
+                                col.HeaderText = "Mã Sách";
+                                break;
+
+                            case "ten_sach":
+                                col.HeaderText = "Tên Sách";
+                                break;
+
+                            case "TenLoaiSach":
+                                col.HeaderText = "Loại Sách";
+                                break;
+
+                            case "tac_gia":
+                                col.HeaderText = "Tác Giả";
+                                break;
+
+                            case "so_luong":
+                                col.HeaderText = "Số Lượng";
+                                break;
+
+                            case "gia_ban":
+                                col.HeaderText = "Giá Bán";
+                                col.DefaultCellStyle.Format = "N0";
+                                break;
+                        }
+                    }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    "Lỗi tải danh sách sách: " + ex.Message
-                );
+                MessageBox.Show("Lỗi tải danh sách sách:\n" + ex.ToString());
             }
         }
 
-        private void dgSach_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void dgSach_CellClick_1(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)
                 return;
@@ -491,7 +622,7 @@ namespace QuanLyBanSach_LINQ_SQL
             }
         }
 
-        private void btnSachThem_Click(object sender, EventArgs e)
+        private void btnSachThem_Click_1(object sender, EventArgs e)
         {
             string tenSach = txtSachTenSach.Text.Trim();
             string tacGia = txtSachTacGia.Text.Trim();
@@ -515,8 +646,9 @@ namespace QuanLyBanSach_LINQ_SQL
                         tac_gia = string.IsNullOrWhiteSpace(tacGia)
                             ? null : tacGia,
 
-                        ma_loai_sach = cbSachLoaiSach.SelectedValue == null ? (int?)null
-                        : Convert.ToInt32(cbSachLoaiSach.SelectedValue),
+                        ma_loai_sach = cbSachLoaiSach.SelectedValue == null
+                            ? (int?)null
+                            : Convert.ToInt32(cbSachLoaiSach.SelectedValue),
 
                         so_luong = Convert.ToInt32(numSachSoLuong.Value),
 
@@ -531,7 +663,6 @@ namespace QuanLyBanSach_LINQ_SQL
 
                 LoadSach();
                 LoadLoaiSachComboBox();
-                LoadComboBoxSachChiTiet();
                 LamMoiSach();
             }
             catch (Exception ex)
@@ -540,7 +671,8 @@ namespace QuanLyBanSach_LINQ_SQL
             }
         }
 
-        private void btnSachSua_Click(object sender, EventArgs e)
+        // Sửa loại sách
+        private void btnSachSua_Click_1(object sender, EventArgs e)
         {
             if (maSachDangChon == null)
             {
@@ -578,7 +710,9 @@ namespace QuanLyBanSach_LINQ_SQL
                     sach.tac_gia = string.IsNullOrWhiteSpace(tacGia)
                         ? null : tacGia;
 
-                    sach.ma_loai_sach = cbSachLoaiSach.SelectedValue == null ? (int?)null
+                    sach.ma_loai_sach =
+                        cbSachLoaiSach.SelectedValue == null
+                        ? (int?)null
                         : Convert.ToInt32(cbSachLoaiSach.SelectedValue);
 
                     sach.so_luong = Convert.ToInt32(numSachSoLuong.Value);
@@ -592,7 +726,6 @@ namespace QuanLyBanSach_LINQ_SQL
 
                 LoadSach();
                 LoadLoaiSachComboBox();
-                LoadComboBoxSachChiTiet();
                 LamMoiSach();
             }
             catch (Exception ex)
@@ -601,7 +734,8 @@ namespace QuanLyBanSach_LINQ_SQL
             }
         }
 
-        private void btnSachXoa_Click(object sender, EventArgs e)
+        // Xóa loại sách
+        private void btnSachXoa_Click_1(object sender, EventArgs e)
         {
             if (maSachDangChon == null)
             {
@@ -659,7 +793,6 @@ namespace QuanLyBanSach_LINQ_SQL
                 MessageBox.Show("Xóa sách thành công!");
 
                 LoadSach();
-                LoadComboBoxSachChiTiet();
                 LamMoiSach();
             }
             catch (Exception ex)
@@ -683,6 +816,7 @@ namespace QuanLyBanSach_LINQ_SQL
             dgSach.ClearSelection();
         }
 
+        // --- HÓA ĐƠN ---
         private void LoadHoaDon()
         {
             using (QuanLyBanSachDataContext db = new QuanLyBanSachDataContext())
@@ -690,19 +824,19 @@ namespace QuanLyBanSach_LINQ_SQL
                 var danhSach = db.tbl_hoa_dons
                     .Select(x => new
                     {
-                        MaHoaDon = x.ma_hoa_don,
-                        NgayLapHoaDon = x.ngay_lap_hoa_don,
-                        TenKhachHang = x.ten_khach_hang,
-                        SdtKhachHang = x.sdt_khach_hang
+                        ma_hoa_don = x.ma_hoa_don,
+                        ngay_lap_hoa_don = x.ngay_lap_hoa_don,
+                        ten_khach_hang = x.ten_khach_hang,
+                        sdt_khach_hang = x.sdt_khach_hang
                     })
                     .ToList();
 
                 dgHoaDon.DataSource = danhSach;
 
-                dgHoaDon.Columns["MaHoaDon"].HeaderText = "Mã hóa đơn";
-                dgHoaDon.Columns["NgayLapHoaDon"].HeaderText = "Ngày lập";
-                dgHoaDon.Columns["TenKhachHang"].HeaderText = "Tên khách hàng";
-                dgHoaDon.Columns["SdtKhachHang"].HeaderText = "Số điện thoại";
+                dgHoaDon.Columns["ma_hoa_don"].HeaderText = "Mã hóa đơn";
+                dgHoaDon.Columns["ngay_lap_hoa_don"].HeaderText = "Ngày lập";
+                dgHoaDon.Columns["ten_khach_hang"].HeaderText = "Tên khách hàng";
+                dgHoaDon.Columns["sdt_khach_hang"].HeaderText = "Số điện thoại";
             }
         }
 
@@ -713,22 +847,30 @@ namespace QuanLyBanSach_LINQ_SQL
 
             DataGridViewRow row = dgHoaDon.Rows[e.RowIndex];
 
-            maHoaDonDangChon = Convert.ToInt32(row.Cells["MaHoaDon"].Value);
+            if (row.Cells["ma_hoa_don"].Value == null ||
+                row.Cells["ma_hoa_don"].Value == DBNull.Value)
+                return;
 
-            txtHoaDonTenKH.Text = row.Cells["TenKhachHang"].Value?.ToString() ?? "";
-            txtHoaDonSDTKH.Text = row.Cells["SdtKhachHang"].Value?.ToString() ?? "";
+            maHoaDonDangChon = Convert.ToInt32(
+                row.Cells["ma_hoa_don"].Value
+            );
 
-            if (row.Cells["NgayLapHoaDon"].Value != null &&
-                row.Cells["NgayLapHoaDon"].Value != DBNull.Value)
+            txtHoaDonTenKH.Text =
+                row.Cells["ten_khach_hang"].Value?.ToString() ?? "";
+
+            txtHoaDonSDTKH.Text =
+                row.Cells["sdt_khach_hang"].Value?.ToString() ?? "";
+
+            if (row.Cells["ngay_lap_hoa_don"].Value != null &&
+                row.Cells["ngay_lap_hoa_don"].Value != DBNull.Value)
             {
                 dateNgayLapHoaDon.Value =
-                    Convert.ToDateTime(row.Cells["NgayLapHoaDon"].Value);
+                    Convert.ToDateTime(row.Cells["ngay_lap_hoa_don"].Value);
             }
 
-            // Load chi tiết hóa đơn tương ứng
             LoadChiTietHoaDon(maHoaDonDangChon.Value);
         }
-
+        //Thêm hóa đơn
         private void btnHoaDonThem_Click(object sender, EventArgs e)
         {
             using (QuanLyBanSachDataContext db = new QuanLyBanSachDataContext())
@@ -755,7 +897,7 @@ namespace QuanLyBanSach_LINQ_SQL
             LoadHoaDon();
             LamMoiHoaDon();
         }
-
+        //Sửa hóa đơn
         private void btnHoaDonSua_Click(object sender, EventArgs e)
         {
             if (maHoaDonDangChon == null)
@@ -793,6 +935,21 @@ namespace QuanLyBanSach_LINQ_SQL
             LoadHoaDon();
             LamMoiHoaDon();
         }
+
+        // Làm mới hóa đơn
+        private void LamMoiHoaDon()
+        {
+            maHoaDonDangChon = null;
+
+            txtHoaDonTenKH.Clear();
+            txtHoaDonSDTKH.Clear();
+
+            dateNgayLapHoaDon.Value = DateTime.Today;
+
+            dgHoaDon.ClearSelection();
+            if (dgChiTietHoaDon != null) dgChiTietHoaDon.DataSource = null;
+        }
+        // Xóa hóa đơn
         private void btnHoaDonXoa_Click(object sender, EventArgs e)
         {
             if (maHoaDonDangChon == null)
@@ -842,90 +999,111 @@ namespace QuanLyBanSach_LINQ_SQL
             LoadHoaDon();
             LamMoiHoaDon();
         }
-        private void LamMoiHoaDon()
-        {
-            maHoaDonDangChon = null;
 
-            txtHoaDonTenKH.Clear();
-            txtHoaDonSDTKH.Clear();
-
-            dateNgayLapHoaDon.Value = DateTime.Today;
-
-            dgHoaDon.ClearSelection();
-            if (dgChiTietHoaDon != null) dgChiTietHoaDon.DataSource = null;
-        }
-
+        // --- PHIẾU NHẬP ---
         private void LoadPhieuNhap()
         {
-            using (QuanLyBanSachDataContext db = new QuanLyBanSachDataContext())
+            try
             {
-                var danhSach = db.tbl_phieu_nhaps
-                    .Select(x => new
-                    {
-                        MaPhieuNhap = x.ma_phieu_nhap,
-                        NgayLapPhieuNhap = x.ngay_lap_phieu_nhap,
-                        TenNhaCungCap = x.ten_nha_cung_cap
-                    })
-                    .ToList();
+                using (QuanLyBanSachDataContext db = new QuanLyBanSachDataContext())
+                {
+                    var danhSach = db.tbl_phieu_nhaps
+                        .Select(x => new
+                        {
+                            MaPhieuNhap = x.ma_phieu_nhap,
+                            NgayLapPhieuNhap = x.ngay_lap_phieu_nhap,
+                            TenNhaCungCap = x.ten_nha_cung_cap
+                        })
+                        .ToList();
 
-                dgPhieuNhap.DataSource = danhSach;
+                    dgPhieuNhap.DataSource = null;
 
-                dgPhieuNhap.Columns["MaPhieuNhap"].HeaderText = "Mã phiếu nhập";
-                dgPhieuNhap.Columns["NgayLapPhieuNhap"].HeaderText = "Ngày lập phiếu";
-                dgPhieuNhap.Columns["TenNhaCungCap"].HeaderText = "Nhà cung cấp";
+                    dgPhieuNhap.Columns["MaPhieuNhap"].DataPropertyName = "MaPhieuNhap";
+                    dgPhieuNhap.Columns["NgayLapPhieuNhap"].DataPropertyName = "NgayLapPhieuNhap";
+                    dgPhieuNhap.Columns["TenNhaCungCap"].DataPropertyName = "TenNhaCungCap";
+
+                    dgPhieuNhap.DataSource = danhSach;
+
+                    dgPhieuNhap.Columns["MaPhieuNhap"].HeaderText = "Mã phiếu nhập";
+                    dgPhieuNhap.Columns["NgayLapPhieuNhap"].HeaderText = "Ngày lập phiếu";
+                    dgPhieuNhap.Columns["TenNhaCungCap"].HeaderText = "Nhà cung cấp";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi tải phiếu nhập:\n" + ex.ToString());
             }
         }
 
         private void dgPhieuNhap_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0)
-                return;
-
-            DataGridViewRow row = dgPhieuNhap.Rows[e.RowIndex];
-
-            maPhieuNhapDangChon = Convert.ToInt32(
-                row.Cells["MaPhieuNhap"].Value
-            );
-
-            txtPhieuNhapNhaCungCap.Text =
-                row.Cells["TenNhaCungCap"].Value?.ToString() ?? "";
-
-            if (row.Cells["NgayLapPhieuNhap"].Value != null &&
-                row.Cells["NgayLapPhieuNhap"].Value != DBNull.Value)
+            try
             {
-                dateNgayLapPhieu.Value = Convert.ToDateTime(
-                    row.Cells["NgayLapPhieuNhap"].Value
+                if (e.RowIndex < 0)
+                    return;
+
+                DataGridViewRow row = dgPhieuNhap.Rows[e.RowIndex];
+
+                if (row.Cells["MaPhieuNhap"].Value == null ||
+                    row.Cells["MaPhieuNhap"].Value == DBNull.Value)
+                    return;
+
+                maPhieuNhapDangChon = Convert.ToInt32(
+                    row.Cells["MaPhieuNhap"].Value
+                );
+
+                txtPhieuNhapNhaCungCap.Text =
+                    row.Cells["TenNhaCungCap"].Value?.ToString() ?? "";
+
+                if (row.Cells["NgayLapPhieuNhap"].Value != null &&
+                    row.Cells["NgayLapPhieuNhap"].Value != DBNull.Value)
+                {
+                    dateNgayLapPhieu.Value = Convert.ToDateTime(
+                        row.Cells["NgayLapPhieuNhap"].Value
+                    );
+                }
+
+                LoadChiTietPhieuNhap(maPhieuNhapDangChon.Value);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Lỗi khi chọn phiếu nhập:\n" + ex.ToString()
                 );
             }
-
-            // Load chi tiết phiếu nhập tương ứng
-            LoadChiTietPhieuNhap(maPhieuNhapDangChon.Value);
         }
-
+        // Thêm phiếu nhập
         private void btnPhieuNhapThem_Click(object sender, EventArgs e)
         {
-            using (QuanLyBanSachDataContext db = new QuanLyBanSachDataContext())
+            try
             {
-                tbl_phieu_nhap phieuNhap = new tbl_phieu_nhap
+                using (QuanLyBanSachDataContext db = new QuanLyBanSachDataContext())
                 {
-                    ngay_lap_phieu_nhap = dateNgayLapPhieu.Value.Date,
+                    tbl_phieu_nhap phieuNhap = new tbl_phieu_nhap
+                    {
+                        ngay_lap_phieu_nhap = dateNgayLapPhieu.Value.Date,
 
-                    ten_nha_cung_cap = string.IsNullOrWhiteSpace(
-                        txtPhieuNhapNhaCungCap.Text)
-                        ? null
-                        : txtPhieuNhapNhaCungCap.Text.Trim()
-                };
+                        ten_nha_cung_cap = string.IsNullOrWhiteSpace(
+                            txtPhieuNhapNhaCungCap.Text)
+                            ? null
+                            : txtPhieuNhapNhaCungCap.Text.Trim()
+                    };
 
-                db.tbl_phieu_nhaps.InsertOnSubmit(phieuNhap);
-                db.SubmitChanges();
+                    db.tbl_phieu_nhaps.InsertOnSubmit(phieuNhap);
+                    db.SubmitChanges();
+                }
+
+                MessageBox.Show("Thêm phiếu nhập thành công!");
+
+                LoadPhieuNhap();
+                LamMoiPhieuNhap();
             }
-
-            MessageBox.Show("Thêm phiếu nhập thành công!");
-
-            LoadPhieuNhap();
-            LamMoiPhieuNhap();
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi thêm phiếu nhập:\n" + ex.ToString());
+            }
         }
-
+        // Sửa phiếu nhập
         private void btnPhieuNhapSua_Click(object sender, EventArgs e)
         {
             if (maPhieuNhapDangChon == null)
@@ -960,7 +1138,7 @@ namespace QuanLyBanSach_LINQ_SQL
             LoadPhieuNhap();
             LamMoiPhieuNhap();
         }
-
+        // Xóa phiếu nhập
         private void btnPhieuNhapXoa_Click(object sender, EventArgs e)
         {
             if (maPhieuNhapDangChon == null)
@@ -1010,6 +1188,7 @@ namespace QuanLyBanSach_LINQ_SQL
             LoadPhieuNhap();
             LamMoiPhieuNhap();
         }
+        // Làm mới phiếu nhập
         private void LamMoiPhieuNhap()
         {
             maPhieuNhapDangChon = null;
@@ -1068,7 +1247,7 @@ namespace QuanLyBanSach_LINQ_SQL
             }
         }
 
-        // --- CHI TIẾT HÓA ĐƠN (ĐÃ ĐỊNH DẠNG SỐ TIỀN ĐẸP MẮT) ---
+        
         private void LoadChiTietHoaDon(int maHoaDon)
         {
             try
@@ -1109,17 +1288,49 @@ namespace QuanLyBanSach_LINQ_SQL
 
         private void dgChiTietHoaDon_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0 || dgChiTietHoaDon == null) return;
-            DataGridViewRow row = dgChiTietHoaDon.Rows[e.RowIndex];
-            if (row.Cells["ma_sach"].Value != null)
+            try
             {
-                maSachChiTietHoaDonDangChon = Convert.ToInt32(row.Cells["ma_sach"].Value);
-                if (cbChiTietHoaDonSach != null) cbChiTietHoaDonSach.SelectedValue = maSachChiTietHoaDonDangChon.Value;
-                if (numChiTietHoaDonSoLuong != null && row.Cells["so_luong"].Value != null)
+                if (e.RowIndex < 0 || dgChiTietHoaDon == null)
+                    return;
+
+                DataGridViewRow row = dgChiTietHoaDon.Rows[e.RowIndex];
+
+                // Lấy mã sách
+                object giaTriMaSach = row.Cells["MaSach"].Value;
+
+                if (giaTriMaSach == null || giaTriMaSach == DBNull.Value)
+                    return;
+
+                maSachChiTietHoaDonDangChon = Convert.ToInt32(giaTriMaSach);
+
+                // Chọn sách trong ComboBox
+                if (cbChiTietHoaDonSach != null)
                 {
-                    decimal sl = Convert.ToDecimal(row.Cells["so_luong"].Value);
-                    numChiTietHoaDonSoLuong.Value = Math.Min(Math.Max(sl, numChiTietHoaDonSoLuong.Minimum), numChiTietHoaDonSoLuong.Maximum);
+                    cbChiTietHoaDonSach.SelectedValue =
+                        maSachChiTietHoaDonDangChon.Value;
                 }
+
+                // Lấy số lượng
+                object giaTriSoLuong = row.Cells["SoLuong"].Value;
+
+                if (numChiTietHoaDonSoLuong != null &&
+                    giaTriSoLuong != null &&
+                    giaTriSoLuong != DBNull.Value)
+                {
+                    decimal sl = Convert.ToDecimal(giaTriSoLuong);
+
+                    numChiTietHoaDonSoLuong.Value =
+                        Math.Min(
+                            Math.Max(sl, numChiTietHoaDonSoLuong.Minimum),
+                            numChiTietHoaDonSoLuong.Maximum
+                        );
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Lỗi khi chọn chi tiết hóa đơn:\n" + ex.ToString()
+                );
             }
         }
 
@@ -1272,13 +1483,13 @@ namespace QuanLyBanSach_LINQ_SQL
         {
             if (e.RowIndex < 0 || dgChiTietPhieuNhap == null) return;
             DataGridViewRow row = dgChiTietPhieuNhap.Rows[e.RowIndex];
-            if (row.Cells["ma_sach"].Value != null)
+            if (row.Cells["colMaSach"].Value != null)
             {
-                maSachChiTietPhieuNhapDangChon = Convert.ToInt32(row.Cells["ma_sach"].Value);
+                maSachChiTietPhieuNhapDangChon = Convert.ToInt32(row.Cells["colMaSach"].Value);
                 if (cbChiTietPhieuNhapSach != null) cbChiTietPhieuNhapSach.SelectedValue = maSachChiTietPhieuNhapDangChon.Value;
-                if (numChiTietPhieuNhapSoLuong != null && row.Cells["so_luong"].Value != null)
+                if (numChiTietPhieuNhapSoLuong != null && row.Cells["colSoLuong"].Value != null)
                 {
-                    decimal sl = Convert.ToDecimal(row.Cells["so_luong"].Value);
+                    decimal sl = Convert.ToDecimal(row.Cells["colSoLuong"].Value);
                     numChiTietPhieuNhapSoLuong.Value = Math.Min(Math.Max(sl, numChiTietPhieuNhapSoLuong.Minimum), numChiTietPhieuNhapSoLuong.Maximum);
                 }
             }
@@ -1489,6 +1700,60 @@ namespace QuanLyBanSach_LINQ_SQL
             {
                 MessageBox.Show("Lỗi khi tạo dữ liệu in phiếu nhập: " + ex.Message);
             }
+        }
+
+        private void dgSach_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void dgPhieuNhap_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void btnChiTietPhieuNhapThem_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgLoaiSach_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void btnMoDoiMatKhau_Click(object sender, EventArgs e)
+        {
+            using (frmDoiMatKhau frm = new frmDoiMatKhau(TenDangNhapHienTai))
+            {
+                frm.ShowDialog();
+            }
+        }
+
+        private void btnQuanLyTaiKhoan_Click(object sender, EventArgs e)
+        {
+            using (frmQuanLyTaiKhoan frm = new frmQuanLyTaiKhoan())
+            {
+                frm.ShowDialog();
+            }
+        }
+
+        private void btnQuanLyPhanQuyen_Click(object sender, EventArgs e)
+        {
+            using (frmQuanLyPhanQuyen frm = new frmQuanLyPhanQuyen())
+            {
+                frm.ShowDialog();
+            }
+        }
+
+        private void cbChiTietPhieuNhapSach_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel6_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
