@@ -323,5 +323,10 @@ namespace QuanLyBanSach_LINQ_SQL
                 // Có thể xử lý nếu muốn double click
             }
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

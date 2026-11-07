@@ -43,41 +43,48 @@
             // 
             this.lblNhomQuyen.AutoSize = true;
             this.lblNhomQuyen.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNhomQuyen.Location = new System.Drawing.Point(74, 33);
+            this.lblNhomQuyen.Location = new System.Drawing.Point(66, 26);
             this.lblNhomQuyen.Name = "lblNhomQuyen";
-            this.lblNhomQuyen.Size = new System.Drawing.Size(121, 22);
+            this.lblNhomQuyen.Size = new System.Drawing.Size(102, 18);
             this.lblNhomQuyen.TabIndex = 0;
             this.lblNhomQuyen.Text = "Nhóm quyền";
             // 
             // cbPhanQuyen
             // 
             this.cbPhanQuyen.FormattingEnabled = true;
-            this.cbPhanQuyen.Location = new System.Drawing.Point(201, 32);
+            this.cbPhanQuyen.Location = new System.Drawing.Point(179, 26);
+            this.cbPhanQuyen.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cbPhanQuyen.Name = "cbPhanQuyen";
-            this.cbPhanQuyen.Size = new System.Drawing.Size(250, 28);
+            this.cbPhanQuyen.Size = new System.Drawing.Size(223, 24);
             this.cbPhanQuyen.TabIndex = 1;
             this.cbPhanQuyen.SelectedIndexChanged += new System.EventHandler(this.cbPhanQuyen_SelectedIndexChanged);
             // 
             // btnLuu
             // 
-            this.btnLuu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLuu.Location = new System.Drawing.Point(102, 76);
+            this.btnLuu.BackColor = System.Drawing.SystemColors.Highlight;
+            this.btnLuu.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLuu.ForeColor = System.Drawing.Color.White;
+            this.btnLuu.Location = new System.Drawing.Point(91, 61);
+            this.btnLuu.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnLuu.Name = "btnLuu";
-            this.btnLuu.Size = new System.Drawing.Size(178, 42);
+            this.btnLuu.Size = new System.Drawing.Size(158, 34);
             this.btnLuu.TabIndex = 2;
             this.btnLuu.Text = "Lưu phân quyền";
-            this.btnLuu.UseVisualStyleBackColor = true;
+            this.btnLuu.UseVisualStyleBackColor = false;
             this.btnLuu.Click += new System.EventHandler(this.btnLuu_Click);
             // 
             // btnLamMoi
             // 
-            this.btnLamMoi.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLamMoi.Location = new System.Drawing.Point(322, 76);
+            this.btnLamMoi.BackColor = System.Drawing.Color.Gold;
+            this.btnLamMoi.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLamMoi.ForeColor = System.Drawing.Color.White;
+            this.btnLamMoi.Location = new System.Drawing.Point(286, 61);
+            this.btnLamMoi.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnLamMoi.Name = "btnLamMoi";
-            this.btnLamMoi.Size = new System.Drawing.Size(129, 42);
+            this.btnLamMoi.Size = new System.Drawing.Size(115, 34);
             this.btnLamMoi.TabIndex = 3;
             this.btnLamMoi.Text = "Làm mới";
-            this.btnLamMoi.UseVisualStyleBackColor = true;
+            this.btnLamMoi.UseVisualStyleBackColor = false;
             // 
             // dgChucNang
             // 
@@ -89,14 +96,15 @@
             this.colTenChucNang,
             this.colDuocPhep});
             this.dgChucNang.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-            this.dgChucNang.Location = new System.Drawing.Point(2, 152);
+            this.dgChucNang.Location = new System.Drawing.Point(2, 122);
+            this.dgChucNang.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dgChucNang.MultiSelect = false;
             this.dgChucNang.Name = "dgChucNang";
             this.dgChucNang.ReadOnly = true;
             this.dgChucNang.RowHeadersWidth = 62;
             this.dgChucNang.RowTemplate.Height = 28;
             this.dgChucNang.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgChucNang.Size = new System.Drawing.Size(553, 193);
+            this.dgChucNang.Size = new System.Drawing.Size(492, 154);
             this.dgChucNang.TabIndex = 4;
             this.dgChucNang.CurrentCellDirtyStateChanged += new System.EventHandler(this.dgChucNang_CurrentCellDirtyStateChanged);
             // 
@@ -131,14 +139,15 @@
             // 
             // frmQuanLyPhanQuyen
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(559, 351);
+            this.ClientSize = new System.Drawing.Size(497, 281);
             this.Controls.Add(this.dgChucNang);
             this.Controls.Add(this.btnLamMoi);
             this.Controls.Add(this.btnLuu);
             this.Controls.Add(this.cbPhanQuyen);
             this.Controls.Add(this.lblNhomQuyen);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "frmQuanLyPhanQuyen";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmQuanLyPhanQuyen";
