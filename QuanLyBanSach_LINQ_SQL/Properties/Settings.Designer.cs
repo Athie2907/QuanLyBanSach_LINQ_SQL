@@ -26,8 +26,19 @@ namespace QuanLyBanSach_LINQ_SQL.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=tcp:127.0.0.1,60954;Initial Catalog=db_QuanLyBanSach;Integrated Secur" +
-            "ity=True;Encrypt=False;TrustServerCertificate=True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=Athie\\SQLEXPRESS;Initial Catalog=db_QuanLyBanSach;Integrated Security" +
+            "=True;TrustServerCertificate=True")]
+        public string db_QuanLyBanSachConnectionString1 {
+            get {
+                return ((string)(this["db_QuanLyBanSachConnectionString1"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=localhost\\SQLEXPRESS;Initial Catalog=db_QuanLyBanSach;Integrated Secu" +
+            "rity=True;TrustServerCertificate=True")]
         public string db_QuanLyBanSachConnectionString {
             get {
                 return ((string)(this["db_QuanLyBanSachConnectionString"]));
@@ -37,11 +48,11 @@ namespace QuanLyBanSach_LINQ_SQL.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=Athie\\SQLEXPRESS;Initial Catalog=db_QuanLyBanSach;Integrated Security" +
-            "=True;TrustServerCertificate=True")]
-        public string db_QuanLyBanSachConnectionString1 {
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.\\SQLEXPRESS;Initial Catalog=db_QuanLyBanSach;Integrated Security=Tru" +
+            "e;TrustServerCertificate=True")]
+        public string db_QuanLyBanSachConnectionString2 {
             get {
-                return ((string)(this["db_QuanLyBanSachConnectionString1"]));
+                return ((string)(this["db_QuanLyBanSachConnectionString2"]));
             }
         }
     }

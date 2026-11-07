@@ -12,6 +12,13 @@ namespace QuanLyBanSach_LINQ_SQL
 {
     public partial class frmQuanLyPhanQuyen : Form
     {
+        // Hàm đọc trực tiếp chuỗi kết nối từ App.config / Settings
+        private QuanLyBanSachDataContext LayDataContext()
+        {
+            string connStr = Properties.Settings.Default.db_QuanLyBanSachConnectionString;
+            return new QuanLyBanSachDataContext(connStr);
+        }
+
         public frmQuanLyPhanQuyen()
         {
             InitializeComponent();
@@ -37,8 +44,7 @@ namespace QuanLyBanSach_LINQ_SQL
         {
             try
             {
-                using (QuanLyBanSachDataContext db =
-                    new QuanLyBanSachDataContext())
+                using (QuanLyBanSachDataContext db = LayDataContext())
                 {
                     var danhSach = db.tbl_phan_quyens
                         .Select(x => new
@@ -65,6 +71,7 @@ namespace QuanLyBanSach_LINQ_SQL
                 MessageBox.Show("Lỗi tải nhóm quyền: " + ex.Message);
             }
         }
+
         private void LoadChucNang()
         {
             if (cbPhanQuyen.SelectedValue == null ||
@@ -78,8 +85,7 @@ namespace QuanLyBanSach_LINQ_SQL
                 int maPhanQuyen =
                     (int)cbPhanQuyen.SelectedValue;
 
-                using (QuanLyBanSachDataContext db =
-                    new QuanLyBanSachDataContext())
+                using (QuanLyBanSachDataContext db = LayDataContext())
                 {
                     var danhSach = db.tbl_chuc_nangs
                         .Select(x => new ChucNangPhanQuyen
@@ -116,7 +122,7 @@ namespace QuanLyBanSach_LINQ_SQL
         private void btnLuu_Click(object sender, EventArgs e)
         {
             if (cbPhanQuyen.SelectedValue == null ||
-        !(cbPhanQuyen.SelectedValue is int))
+                !(cbPhanQuyen.SelectedValue is int))
             {
                 MessageBox.Show("Vui lòng chọn nhóm quyền!");
                 return;
@@ -129,8 +135,7 @@ namespace QuanLyBanSach_LINQ_SQL
                 // Kết thúc chỉnh sửa checkbox trước khi lưu
                 dgChucNang.EndEdit();
 
-                using (QuanLyBanSachDataContext db =
-                    new QuanLyBanSachDataContext())
+                using (QuanLyBanSachDataContext db = LayDataContext())
                 {
                     // Xóa các quyền cũ của nhóm quyền
                     var quyenCu = db.tbl_phan_quyen_chuc_nangs

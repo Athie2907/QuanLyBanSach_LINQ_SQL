@@ -60,10 +60,13 @@ namespace QuanLyBanSach_LINQ_SQL
     partial void Inserttbl_chuc_nang(tbl_chuc_nang instance);
     partial void Updatetbl_chuc_nang(tbl_chuc_nang instance);
     partial void Deletetbl_chuc_nang(tbl_chuc_nang instance);
+    partial void Inserttbl_nha_cung_cap(tbl_nha_cung_cap instance);
+    partial void Updatetbl_nha_cung_cap(tbl_nha_cung_cap instance);
+    partial void Deletetbl_nha_cung_cap(tbl_nha_cung_cap instance);
     #endregion
 		
 		public QuanLyBanSachDataContext() : 
-				base(global::QuanLyBanSach_LINQ_SQL.Properties.Settings.Default.db_QuanLyBanSachConnectionString1, mappingSource)
+				base(global::QuanLyBanSach_LINQ_SQL.Properties.Settings.Default.db_QuanLyBanSachConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -169,6 +172,14 @@ namespace QuanLyBanSach_LINQ_SQL
 			get
 			{
 				return this.GetTable<tbl_chuc_nang>();
+			}
+		}
+		
+		public System.Data.Linq.Table<tbl_nha_cung_cap> tbl_nha_cung_caps
+		{
+			get
+			{
+				return this.GetTable<tbl_nha_cung_cap>();
 			}
 		}
 	}
@@ -1966,6 +1977,140 @@ namespace QuanLyBanSach_LINQ_SQL
 		{
 			this.SendPropertyChanging();
 			entity.tbl_chuc_nang = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tbl_nha_cung_cap")]
+	public partial class tbl_nha_cung_cap : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ma_nha_cung_cap;
+		
+		private string _ten_nha_cung_cap;
+		
+		private string _so_dien_thoai;
+		
+		private string _dia_chi;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void Onma_nha_cung_capChanging(int value);
+    partial void Onma_nha_cung_capChanged();
+    partial void Onten_nha_cung_capChanging(string value);
+    partial void Onten_nha_cung_capChanged();
+    partial void Onso_dien_thoaiChanging(string value);
+    partial void Onso_dien_thoaiChanged();
+    partial void Ondia_chiChanging(string value);
+    partial void Ondia_chiChanged();
+    #endregion
+		
+		public tbl_nha_cung_cap()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ma_nha_cung_cap", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ma_nha_cung_cap
+		{
+			get
+			{
+				return this._ma_nha_cung_cap;
+			}
+			set
+			{
+				if ((this._ma_nha_cung_cap != value))
+				{
+					this.Onma_nha_cung_capChanging(value);
+					this.SendPropertyChanging();
+					this._ma_nha_cung_cap = value;
+					this.SendPropertyChanged("ma_nha_cung_cap");
+					this.Onma_nha_cung_capChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ten_nha_cung_cap", DbType="NVarChar(200) NOT NULL", CanBeNull=false)]
+		public string ten_nha_cung_cap
+		{
+			get
+			{
+				return this._ten_nha_cung_cap;
+			}
+			set
+			{
+				if ((this._ten_nha_cung_cap != value))
+				{
+					this.Onten_nha_cung_capChanging(value);
+					this.SendPropertyChanging();
+					this._ten_nha_cung_cap = value;
+					this.SendPropertyChanged("ten_nha_cung_cap");
+					this.Onten_nha_cung_capChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_so_dien_thoai", DbType="VarChar(20)")]
+		public string so_dien_thoai
+		{
+			get
+			{
+				return this._so_dien_thoai;
+			}
+			set
+			{
+				if ((this._so_dien_thoai != value))
+				{
+					this.Onso_dien_thoaiChanging(value);
+					this.SendPropertyChanging();
+					this._so_dien_thoai = value;
+					this.SendPropertyChanged("so_dien_thoai");
+					this.Onso_dien_thoaiChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dia_chi", DbType="NVarChar(250)")]
+		public string dia_chi
+		{
+			get
+			{
+				return this._dia_chi;
+			}
+			set
+			{
+				if ((this._dia_chi != value))
+				{
+					this.Ondia_chiChanging(value);
+					this.SendPropertyChanging();
+					this._dia_chi = value;
+					this.SendPropertyChanged("dia_chi");
+					this.Ondia_chiChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }

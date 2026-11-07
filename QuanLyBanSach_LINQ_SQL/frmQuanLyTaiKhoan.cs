@@ -13,6 +13,14 @@ namespace QuanLyBanSach_LINQ_SQL
     public partial class frmQuanLyTaiKhoan : Form
     {
         private int maNguoiDungDangChon = 0;
+
+        // Hàm đọc trực tiếp chuỗi kết nối từ App.config
+        private QuanLyBanSachDataContext LayDataContext()
+        {
+            string connStr = Properties.Settings.Default.db_QuanLyBanSachConnectionString;
+            return new QuanLyBanSachDataContext(connStr);
+        }
+
         public frmQuanLyTaiKhoan()
         {
             InitializeComponent();
@@ -33,8 +41,7 @@ namespace QuanLyBanSach_LINQ_SQL
         {
             try
             {
-                using (QuanLyBanSachDataContext db =
-                    new QuanLyBanSachDataContext())
+                using (QuanLyBanSachDataContext db = LayDataContext())
                 {
                     var danhSach = (from nd in db.tbl_nguoi_dungs
                                     join pq in db.tbl_phan_quyens
@@ -64,8 +71,7 @@ namespace QuanLyBanSach_LINQ_SQL
         {
             try
             {
-                using (QuanLyBanSachDataContext db =
-                    new QuanLyBanSachDataContext())
+                using (QuanLyBanSachDataContext db = LayDataContext())
                 {
                     var danhSach = db.tbl_phan_quyens
                         .Select(x => new
@@ -113,8 +119,7 @@ namespace QuanLyBanSach_LINQ_SQL
 
             try
             {
-                using (QuanLyBanSachDataContext db =
-                    new QuanLyBanSachDataContext())
+                using (QuanLyBanSachDataContext db = LayDataContext())
                 {
                     // Kiểm tra tên đăng nhập đã tồn tại
                     bool daTonTai = db.tbl_nguoi_dungs
@@ -231,8 +236,7 @@ namespace QuanLyBanSach_LINQ_SQL
 
             try
             {
-                using (QuanLyBanSachDataContext db =
-                    new QuanLyBanSachDataContext())
+                using (QuanLyBanSachDataContext db = LayDataContext())
                 {
                     var taiKhoan = db.tbl_nguoi_dungs
                         .FirstOrDefault(x =>
@@ -276,8 +280,7 @@ namespace QuanLyBanSach_LINQ_SQL
 
             try
             {
-                using (QuanLyBanSachDataContext db =
-                    new QuanLyBanSachDataContext())
+                using (QuanLyBanSachDataContext db = LayDataContext())
                 {
                     var taiKhoan = db.tbl_nguoi_dungs
                         .FirstOrDefault(x =>

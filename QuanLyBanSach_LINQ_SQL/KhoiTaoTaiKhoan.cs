@@ -9,33 +9,25 @@ namespace QuanLyBanSach_LINQ_SQL
         {
             try
             {
-                using (QuanLyBanSachDataContext db =
-                    new QuanLyBanSachDataContext())
+                string connStr = Properties.Settings.Default.db_QuanLyBanSachConnectionString;
+                using (QuanLyBanSachDataContext db = new QuanLyBanSachDataContext(connStr))
                 {
-                    // Kiểm tra đã có tài khoản hay chưa
                     if (db.tbl_nguoi_dungs.Any())
                     {
                         return "Database đã có tài khoản. Không cần tạo thêm!";
                     }
 
-                    // Tìm nhóm quyền Quản trị viên
                     var quyenAdmin = db.tbl_phan_quyens
-                        .FirstOrDefault(x =>
-                            x.ten_phan_quyen == "Quản trị viên");
+                        .FirstOrDefault(x => x.ten_phan_quyen == "Quản trị viên");
 
                     if (quyenAdmin == null)
                     {
                         return "Không tìm thấy nhóm quyền Quản trị viên!";
                     }
 
-                    // Tạo Salt và mã hóa mật khẩu
                     string salt = PasswordHelper.TaoSalt();
+                    string matKhauHash = PasswordHelper.MaHoaMatKhau("Admin@123", salt);
 
-                    string matKhauHash =
-                        PasswordHelper.MaHoaMatKhau(
-                            "Admin@123", salt);
-
-                    // Tạo tài khoản
                     tbl_nguoi_dung taiKhoan = new tbl_nguoi_dung
                     {
                         ten_dang_nhap = "admin",

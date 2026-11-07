@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="db_QuanLyBanSach" Class="QuanLyBanSachDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=Athie\SQLEXPRESS;Initial Catalog=db_QuanLyBanSach;Integrated Security=True;Trust Server Certificate=True" SettingsObjectName="QuanLyBanSach_LINQ_SQL.Properties.Settings" SettingsPropertyName="db_QuanLyBanSachConnectionString1" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.\SQLEXPRESS;Initial Catalog=db_QuanLyBanSach;Integrated Security=True;Trust Server Certificate=True" SettingsObjectName="QuanLyBanSach_LINQ_SQL.Properties.Settings" SettingsPropertyName="db_QuanLyBanSachConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.tbl_chi_tiet_hoa_don" Member="tbl_chi_tiet_hoa_dons">
     <Type Name="tbl_chi_tiet_hoa_don">
       <Column Name="ma_hoa_don" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -90,6 +90,14 @@
       <Column Name="ma_chuc_nang_code" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="ten_chuc_nang" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
       <Association Name="tbl_chuc_nang_tbl_phan_quyen_chuc_nang" Member="tbl_phan_quyen_chuc_nangs" ThisKey="ma_chuc_nang" OtherKey="ma_chuc_nang" Type="tbl_phan_quyen_chuc_nang" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_nha_cung_cap" Member="tbl_nha_cung_caps">
+    <Type Name="tbl_nha_cung_cap">
+      <Column Name="ma_nha_cung_cap" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ten_nha_cung_cap" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="so_dien_thoai" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="dia_chi" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

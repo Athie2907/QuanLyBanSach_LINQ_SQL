@@ -12,6 +12,13 @@ namespace QuanLyBanSach_LINQ_SQL
 {
     public partial class frmLogin : Form
     {
+        // Hàm đọc trực tiếp chuỗi kết nối từ App.config
+        private QuanLyBanSachDataContext LayDataContext()
+        {
+            string connStr = Properties.Settings.Default.db_QuanLyBanSachConnectionString;
+            return new QuanLyBanSachDataContext(connStr);
+        }
+
         public frmLogin()
         {
             InitializeComponent();
@@ -40,8 +47,7 @@ namespace QuanLyBanSach_LINQ_SQL
 
             try
             {
-                using (QuanLyBanSachDataContext db =
-                    new QuanLyBanSachDataContext())
+                using (QuanLyBanSachDataContext db = LayDataContext())
                 {
                     var taiKhoan = db.tbl_nguoi_dungs
                         .FirstOrDefault(x => x.ten_dang_nhap == tenDangNhap);
@@ -71,22 +77,28 @@ namespace QuanLyBanSach_LINQ_SQL
                     }
                 }
 
-                MessageBox.Show(
-                    "Đăng nhập thành công!",
-                    "Thông báo",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
-
                 this.Hide();
 
+                bool dangXuat;
                 using (FormGiaoDien frm = new FormGiaoDien())
                 {
                     frm.TenDangNhapHienTai = tenDangNhap;
                     frm.ShowDialog();
+                    dangXuat = frm.DangXuat;
                 }
 
-                this.Close();
+                if (dangXuat)
+                {
+                    // Người dùng chọn "Đăng xuất": hiện lại màn hình đăng nhập
+                    txtMatKhau.Clear();
+                    lblThongBao.Text = "";
+                    this.Show();
+                    txtTenDangNhap.Focus();
+                }
+                else
+                {
+                    this.Close();
+                }
             }
             catch (Exception ex)
             {
@@ -103,7 +115,5 @@ namespace QuanLyBanSach_LINQ_SQL
         {
             Application.Exit();
         }
-
-
     }
 }
