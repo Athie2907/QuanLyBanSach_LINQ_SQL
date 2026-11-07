@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using Microsoft.Reporting.WinForms;
 
 namespace QuanLyBanSach_LINQ_SQL
 {
-    /// <summary>
-    /// Lấy dữ liệu bằng LINQ to SQL rồi mở FrmInReport (ReportViewer).
-    /// Dùng chung cho FormGiaoDien, frmHoaDon và FrmPhieuNhap để không viết lặp code.
-    /// </summary>
     public static class InBaoCao
     {
         private static QuanLyBanSachDataContext TaoDataContext()
@@ -77,8 +75,11 @@ namespace QuanLyBanSach_LINQ_SQL
                     new ReportParameter("SoDienThoai", hd.sdt_khach_hang ?? "")
                 };
 
+                // Đường dẫn nhúng chính xác tuyệt đối
+                string tenResource = "QuanLyBanSach_LINQ_SQL.rptHoaDon.rdlc";
+
                 using (FrmInReport frm = new FrmInReport(
-                    "QuanLyBanSach_LINQ_SQL.rptHoaDon.rdlc",
+                    tenResource,
                     "HÓA ĐƠN #" + maHoaDon,
                     duLieu,
                     thamSo))
@@ -148,8 +149,11 @@ namespace QuanLyBanSach_LINQ_SQL
                     new ReportParameter("NhaCungCap", pn.ten_nha_cung_cap ?? "")
                 };
 
+                // Đường dẫn nhúng chính xác tuyệt đối
+                string tenResource = "QuanLyBanSach_LINQ_SQL.rptPhieuNhap.rdlc";
+
                 using (FrmInReport frm = new FrmInReport(
-                    "QuanLyBanSach_LINQ_SQL.rptPhieuNhap.rdlc",
+                    tenResource,
                     "PHIẾU NHẬP #" + maPhieuNhap,
                     duLieu,
                     thamSo))

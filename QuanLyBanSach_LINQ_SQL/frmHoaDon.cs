@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Reporting.WinForms;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -205,28 +206,75 @@ namespace QuanLyBanSach_LINQ_SQL
         // 4. NÚT IN HÓA ĐƠN: mở báo cáo ReportViewer (rptHoaDon.rdlc)
         private void btnInHoaDon_Click(object sender, EventArgs e)
         {
-            if (dvgHoaDon.CurrentRow == null)
+            try
             {
-                MessageBox.Show("Vui lòng chọn hóa đơn cần in!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                // 1. Kiểm tra xem người dùng đã chọn hóa đơn nào trên bảng chưa
+                if (dvgHoaDon.CurrentRow == null)
+                {
+                    MessageBox.Show("Vui lòng chọn một hóa đơn từ danh sách để in!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // 2. Lấy mã hóa đơn động từ dòng đang chọn
+                var dongHienTai = dvgHoaDon.CurrentRow;
+                int maHoaDonCanIn = Convert.ToInt32(dongHienTai.Cells["colMaHoaDon"]?.Value ?? dongHienTai.Cells[0].Value);
+
+                string connStr = Properties.Settings.Default.db_QuanLyBanSachConnectionString;
+                using (var db = new QuanLyBanSachDataContext(connStr))
+                {
+                    // Lấy thông tin chung của hóa đơn để đưa vào tham số (Parameters) trên báo cáo
+                    var hoaDon = db.tbl_hoa_dons.FirstOrDefault(h => h.ma_hoa_don == maHoaDonCanIn);
+                    string tenKhach = hoaDon != null && !string.IsNullOrEmpty(hoaDon.ten_khach_hang) ? hoaDon.ten_khach_hang : "Khách vãng lai";
+                    string sdtKhach = hoaDon != null && !string.IsNullOrEmpty(hoaDon.sdt_khach_hang) ? hoaDon.sdt_khach_hang : "";
+                    string ngayLapStr = hoaDon != null && hoaDon.ngay_lap_hoa_don.HasValue ? hoaDon.ngay_lap_hoa_don.Value.ToString("dd/MM/yyyy HH:mm") : DateTime.Now.ToString("dd/MM/yyyy");
+
+                    // 3. Truy vấn trực tiếp từ CSDL ra danh sách chi tiết hóa đơn (List<DongBaoCao>)
+                    var listDongBaoCao = db.tbl_chi_tiet_hoa_dons
+                        .Where(x => x.ma_hoa_don == maHoaDonCanIn)
+                        .AsEnumerable()
+                        .Select((x, index) => new DongBaoCao
+                        {
+                            STT = index + 1,
+                            TenSach = x.tbl_sach != null ? x.tbl_sach.ten_sach : "",
+                            SoLuong = x.so_luong ?? 0,
+                            DonGia = x.tbl_sach != null ? (x.tbl_sach.gia_ban ?? 0) : 0,
+                            ThanhTien = (x.so_luong ?? 0) * (x.tbl_sach != null ? (x.tbl_sach.gia_ban ?? 0) : 0)
+                        }).ToList();
+
+                    // Nếu hóa đơn không có sản phẩm nào
+                    if (listDongBaoCao == null || listDongBaoCao.Count == 0)
+                    {
+                        MessageBox.Show("Hóa đơn mã số #" + maHoaDonCanIn + " không có chi tiết sách nào để in!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    // 4. Tạo các tham số truyền lên tiêu đề báo cáo trên rdlc
+                    List<ReportParameter> listParam = new List<ReportParameter>
+            {
+                new ReportParameter("MaHoaDon", maHoaDonCanIn.ToString()),
+                new ReportParameter("NgayLap", ngayLapStr),
+                new ReportParameter("TenKhach", tenKhach),
+                new ReportParameter("SoDienThoai", sdtKhach)
+            };
+
+                    // 5. Mở Form In Báo Cáo hiển thị trực tiếp bằng ReportViewer
+                    FrmInReport frm = new FrmInReport("rptHoaDon.rdlc", "Hóa Đơn Bán Sách", listDongBaoCao, listParam);
+                    frm.ShowDialog();
+                }
             }
-
-            int maHoaDon = Convert.ToInt32(dvgHoaDon.CurrentRow.Cells["colMaHoaDon"].Value);
-            InBaoCao.InHoaDon(maHoaDon, this);
-        }
-
-        // Nhấp đúp vào dòng hóa đơn trên lưới để mở nhanh chi tiết
-        private void dvgHoaDon_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
+            catch (Exception ex)
             {
-                btnXemChiTiet_Click(null, null);
+                MessageBox.Show("Lỗi khi tạo báo cáo:\n" + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         // (Giữ lại vì Designer đã gắn sự kiện này; không làm gì để bấm 1 lần không mở form)
         private void dvgHoaDon_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+        }
+        private void dvgHoaDon_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Thêm code xử lý nếu cần, hoặc để trống nếu không dùng
         }
     }
 }

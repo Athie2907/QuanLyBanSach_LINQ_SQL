@@ -66,7 +66,7 @@ namespace QuanLyBanSach_LINQ_SQL
     #endregion
 		
 		public QuanLyBanSachDataContext() : 
-				base(global::QuanLyBanSach_LINQ_SQL.Properties.Settings.Default.db_QuanLyBanSachConnectionString, mappingSource)
+				base(global::QuanLyBanSach_LINQ_SQL.Properties.Settings.Default.db_QuanLyBanSachConnectionString3, mappingSource)
 		{
 			OnCreated();
 		}

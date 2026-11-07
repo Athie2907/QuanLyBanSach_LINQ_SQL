@@ -55,5 +55,16 @@ namespace QuanLyBanSach_LINQ_SQL.Properties {
                 return ((string)(this["db_QuanLyBanSachConnectionString2"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.\\SQLEXPRESS;Initial Catalog=db_QuanLyBanSach;Integrated Security=Tru" +
+            "e;Encrypt=True;TrustServerCertificate=True")]
+        public string db_QuanLyBanSachConnectionString3 {
+            get {
+                return ((string)(this["db_QuanLyBanSachConnectionString3"]));
+            }
+        }
     }
 }

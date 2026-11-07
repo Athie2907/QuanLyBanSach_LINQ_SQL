@@ -239,7 +239,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="rptInBaoCao.rdlc" />
+    <EmbeddedResource Include="rptHoaDon.rdlc" />
     <EmbeddedResource Include="rptPhieuNhap.rdlc" />
     <None Include="db_QuanLyBanSachDataSet.xsc">
       <DependentUpon>db_QuanLyBanSachDataSet.xsd</DependentUpon>

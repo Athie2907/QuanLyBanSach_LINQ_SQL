@@ -735,6 +735,7 @@ namespace QuanLyBanSach_LINQ_SQL
             this.btnInHoaDon.TabIndex = 19;
             this.btnInHoaDon.Text = "In Hóa Đơn";
             this.btnInHoaDon.UseVisualStyleBackColor = true;
+            this.btnInHoaDon.Click += new System.EventHandler(this.btnInHoaDon_Click);
             // 
             // txtHoaDonSDTKH
             // 
@@ -1053,6 +1054,7 @@ namespace QuanLyBanSach_LINQ_SQL
             this.btnInPhieuNhap.TabIndex = 18;
             this.btnInPhieuNhap.Text = "In Phiếu Nhập";
             this.btnInPhieuNhap.UseVisualStyleBackColor = true;
+            this.btnInPhieuNhap.Click += new System.EventHandler(this.btnInPhieuNhap_Click);
             // 
             // txtPhieuNhapNhaCungCap
             // 
