@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chrtDoanhThu = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.label1 = new System.Windows.Forms.Label();
             this.radTuanNay = new System.Windows.Forms.RadioButton();
@@ -43,18 +43,19 @@
             // 
             // chrtDoanhThu
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chrtDoanhThu.ChartAreas.Add(chartArea2);
+            chartArea1.Name = "ChartArea1";
+            this.chrtDoanhThu.ChartAreas.Add(chartArea1);
             this.chrtDoanhThu.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend2.Name = "Legend1";
-            this.chrtDoanhThu.Legends.Add(legend2);
+            legend1.Name = "Legend1";
+            this.chrtDoanhThu.Legends.Add(legend1);
             this.chrtDoanhThu.Location = new System.Drawing.Point(0, 0);
+            this.chrtDoanhThu.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.chrtDoanhThu.Name = "chrtDoanhThu";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chrtDoanhThu.Series.Add(series2);
-            this.chrtDoanhThu.Size = new System.Drawing.Size(776, 397);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chrtDoanhThu.Series.Add(series1);
+            this.chrtDoanhThu.Size = new System.Drawing.Size(873, 496);
             this.chrtDoanhThu.TabIndex = 0;
             this.chrtDoanhThu.Text = "chart1";
             this.chrtDoanhThu.Click += new System.EventHandler(this.chrtDoanhThu_Click);
@@ -62,18 +63,19 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(40, 15);
+            this.label1.Location = new System.Drawing.Point(45, 19);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(66, 16);
+            this.label1.Size = new System.Drawing.Size(82, 20);
             this.label1.TabIndex = 1;
             this.label1.Text = "Xem theo:";
             // 
             // radTuanNay
             // 
             this.radTuanNay.AutoSize = true;
-            this.radTuanNay.Location = new System.Drawing.Point(147, 15);
+            this.radTuanNay.Location = new System.Drawing.Point(165, 19);
+            this.radTuanNay.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.radTuanNay.Name = "radTuanNay";
-            this.radTuanNay.Size = new System.Drawing.Size(94, 20);
+            this.radTuanNay.Size = new System.Drawing.Size(112, 24);
             this.radTuanNay.TabIndex = 2;
             this.radTuanNay.TabStop = true;
             this.radTuanNay.Text = "7 ngày qua";
@@ -83,9 +85,10 @@
             // radThangNay
             // 
             this.radThangNay.AutoSize = true;
-            this.radThangNay.Location = new System.Drawing.Point(306, 15);
+            this.radThangNay.Location = new System.Drawing.Point(344, 19);
+            this.radThangNay.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.radThangNay.Name = "radThangNay";
-            this.radThangNay.Size = new System.Drawing.Size(92, 20);
+            this.radThangNay.Size = new System.Drawing.Size(108, 24);
             this.radThangNay.TabIndex = 3;
             this.radThangNay.TabStop = true;
             this.radThangNay.Text = "Tháng này";
@@ -94,32 +97,38 @@
             // 
             // btnThongKe
             // 
-            this.btnThongKe.Location = new System.Drawing.Point(550, 7);
+            this.btnThongKe.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.btnThongKe.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnThongKe.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.btnThongKe.Location = new System.Drawing.Point(619, 9);
+            this.btnThongKe.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnThongKe.Name = "btnThongKe";
-            this.btnThongKe.Size = new System.Drawing.Size(102, 32);
+            this.btnThongKe.Size = new System.Drawing.Size(115, 40);
             this.btnThongKe.TabIndex = 4;
-            this.btnThongKe.Text = "Thông kê";
-            this.btnThongKe.UseVisualStyleBackColor = true;
+            this.btnThongKe.Text = "Thống kê";
+            this.btnThongKe.UseVisualStyleBackColor = false;
             this.btnThongKe.Click += new System.EventHandler(this.btnThongKe_Click);
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.chrtDoanhThu);
-            this.panel1.Location = new System.Drawing.Point(12, 41);
+            this.panel1.Location = new System.Drawing.Point(14, 51);
+            this.panel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(776, 397);
+            this.panel1.Size = new System.Drawing.Size(873, 496);
             this.panel1.TabIndex = 5;
             // 
             // frmChartDashboard
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(900, 562);
             this.Controls.Add(this.btnThongKe);
             this.Controls.Add(this.radThangNay);
             this.Controls.Add(this.radTuanNay);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel1);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "frmChartDashboard";
             this.Text = "THỐNG KÊ DOANH THU BÁN SÁCH";
             ((System.ComponentModel.ISupportInitialize)(this.chrtDoanhThu)).EndInit();

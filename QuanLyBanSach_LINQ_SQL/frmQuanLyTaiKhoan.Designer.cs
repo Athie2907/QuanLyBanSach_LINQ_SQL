@@ -142,41 +142,49 @@
             // 
             // btnThem
             // 
+            this.btnThem.BackColor = System.Drawing.Color.SteelBlue;
+            this.btnThem.ForeColor = System.Drawing.Color.Transparent;
             this.btnThem.Location = new System.Drawing.Point(578, 50);
             this.btnThem.Name = "btnThem";
             this.btnThem.Size = new System.Drawing.Size(75, 34);
             this.btnThem.TabIndex = 13;
             this.btnThem.Text = "Thêm";
-            this.btnThem.UseVisualStyleBackColor = true;
+            this.btnThem.UseVisualStyleBackColor = false;
             this.btnThem.Click += new System.EventHandler(this.btnThem_Click);
             // 
             // btnLamMoi
             // 
+            this.btnLamMoi.BackColor = System.Drawing.Color.SteelBlue;
+            this.btnLamMoi.ForeColor = System.Drawing.Color.Transparent;
             this.btnLamMoi.Location = new System.Drawing.Point(578, 170);
             this.btnLamMoi.Name = "btnLamMoi";
             this.btnLamMoi.Size = new System.Drawing.Size(90, 34);
             this.btnLamMoi.TabIndex = 14;
             this.btnLamMoi.Text = "Làm mới";
-            this.btnLamMoi.UseVisualStyleBackColor = true;
+            this.btnLamMoi.UseVisualStyleBackColor = false;
             // 
             // btnKhoa
             // 
+            this.btnKhoa.BackColor = System.Drawing.Color.SteelBlue;
+            this.btnKhoa.ForeColor = System.Drawing.Color.Transparent;
             this.btnKhoa.Location = new System.Drawing.Point(578, 130);
             this.btnKhoa.Name = "btnKhoa";
             this.btnKhoa.Size = new System.Drawing.Size(135, 34);
             this.btnKhoa.TabIndex = 15;
             this.btnKhoa.Text = "Khóa / Mở khóa";
-            this.btnKhoa.UseVisualStyleBackColor = true;
+            this.btnKhoa.UseVisualStyleBackColor = false;
             this.btnKhoa.Click += new System.EventHandler(this.btnKhoa_Click);
             // 
             // btnSua
             // 
+            this.btnSua.BackColor = System.Drawing.Color.SteelBlue;
+            this.btnSua.ForeColor = System.Drawing.Color.Transparent;
             this.btnSua.Location = new System.Drawing.Point(578, 90);
             this.btnSua.Name = "btnSua";
             this.btnSua.Size = new System.Drawing.Size(75, 34);
             this.btnSua.TabIndex = 16;
             this.btnSua.Text = "Sửa";
-            this.btnSua.UseVisualStyleBackColor = true;
+            this.btnSua.UseVisualStyleBackColor = false;
             this.btnSua.Click += new System.EventHandler(this.btnSua_Click);
             // 
             // dgTaiKhoan

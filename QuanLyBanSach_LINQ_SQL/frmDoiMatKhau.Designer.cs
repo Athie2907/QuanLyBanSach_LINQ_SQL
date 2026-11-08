@@ -108,24 +108,28 @@
             // 
             // btnDoiMatKhau
             // 
+            this.btnDoiMatKhau.BackColor = System.Drawing.Color.LightSteelBlue;
             this.btnDoiMatKhau.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDoiMatKhau.ForeColor = System.Drawing.Color.MidnightBlue;
             this.btnDoiMatKhau.Location = new System.Drawing.Point(233, 190);
             this.btnDoiMatKhau.Name = "btnDoiMatKhau";
             this.btnDoiMatKhau.Size = new System.Drawing.Size(134, 34);
             this.btnDoiMatKhau.TabIndex = 8;
             this.btnDoiMatKhau.Text = "Đổi mật khẩu";
-            this.btnDoiMatKhau.UseVisualStyleBackColor = true;
+            this.btnDoiMatKhau.UseVisualStyleBackColor = false;
             this.btnDoiMatKhau.Click += new System.EventHandler(this.btnDoiMatKhau_Click);
             // 
             // btnHuy
             // 
+            this.btnHuy.BackColor = System.Drawing.Color.LightSteelBlue;
             this.btnHuy.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHuy.ForeColor = System.Drawing.Color.MidnightBlue;
             this.btnHuy.Location = new System.Drawing.Point(407, 190);
             this.btnHuy.Name = "btnHuy";
             this.btnHuy.Size = new System.Drawing.Size(84, 34);
             this.btnHuy.TabIndex = 9;
             this.btnHuy.Text = "Hủy";
-            this.btnHuy.UseVisualStyleBackColor = true;
+            this.btnHuy.UseVisualStyleBackColor = false;
             this.btnHuy.Click += new System.EventHandler(this.btnHuy_Click);
             // 
             // lblThongBao
