@@ -8,7 +8,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace QuanLyBanSach_LINQ_SQL
 {
-    public partial class frmChartDashboard : Form
+    public partial class frmThongKeDoanhThu : Form
     {
         // Khởi tạo DataContext kết nối cơ sở dữ liệu
         private QuanLyBanSachDataContext LayDataContext()
@@ -16,7 +16,7 @@ namespace QuanLyBanSach_LINQ_SQL
             return new QuanLyBanSachDataContext(Properties.Settings.Default.db_QuanLyBanSachConnectionString);
         }
 
-        public frmChartDashboard()
+        public frmThongKeDoanhThu()
         {
             InitializeComponent();
         }

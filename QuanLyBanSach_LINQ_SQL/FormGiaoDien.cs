@@ -1300,7 +1300,7 @@ namespace QuanLyBanSach_LINQ_SQL
         private void menuNhaCungCap_Click(object sender, EventArgs e) => MoForm(new frmNhaCungCap());
         private void menuHoaDon_Click(object sender, EventArgs e) => MoForm(new frmHoaDon());
         private void menuPhieuNhap_Click(object sender, EventArgs e) => MoForm(new FrmPhieuNhap());
-        private void menuThongKe_Click(object sender, EventArgs e) => MoForm(new frmChartDashboard());
+        private void menuThongKe_Click(object sender, EventArgs e) => MoForm(new frmThongKeDoanhThu());
         private void menuTaiKhoan_Click(object sender, EventArgs e) => MoForm(new frmQuanLyTaiKhoan());
         private void menuPhanQuyen_Click(object sender, EventArgs e) => MoForm(new frmQuanLyPhanQuyen());
         private void menuDoiMatKhau_Click(object sender, EventArgs e) => MoForm(new frmDoiMatKhau(TenDangNhapHienTai));
@@ -1316,5 +1316,20 @@ namespace QuanLyBanSach_LINQ_SQL
         private void danhMụcToolStripMenuItem_Click(object sender, EventArgs e) { }
         private void loạiSáchToolStripMenuItem_Click(object sender, EventArgs e) { }
         private void dgSach_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
+
+        private void txtSachTacGia_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label14_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

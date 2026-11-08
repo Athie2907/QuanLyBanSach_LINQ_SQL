@@ -99,7 +99,7 @@
             this.dvgHoaDon.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dvgHoaDon.RowHeadersWidth = 51;
             this.dvgHoaDon.RowTemplate.Height = 24;
-            this.dvgHoaDon.Size = new System.Drawing.Size(776, 225);
+            this.dvgHoaDon.Size = new System.Drawing.Size(875, 298);
             this.dvgHoaDon.TabIndex = 0;
             // 
             // Column1

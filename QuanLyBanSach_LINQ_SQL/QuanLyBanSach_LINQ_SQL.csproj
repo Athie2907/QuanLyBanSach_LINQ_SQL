@@ -89,11 +89,11 @@
     <Compile Include="Form1_Default.Designer.cs">
       <DependentUpon>Form1_Default.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmChartDashboard.cs">
+    <Compile Include="frmThongKeDoanhThu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmChartDashboard.Designer.cs">
-      <DependentUpon>frmChartDashboard.cs</DependentUpon>
+    <Compile Include="frmThongKeDoanhThu.Designer.cs">
+      <DependentUpon>frmThongKeDoanhThu.cs</DependentUpon>
     </Compile>
     <Compile Include="frmChiTietHoaDon.cs">
       <SubType>Form</SubType>
@@ -188,8 +188,8 @@
     <EmbeddedResource Include="FormGiaoDien.resx">
       <DependentUpon>FormGiaoDien.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmChartDashboard.resx">
-      <DependentUpon>frmChartDashboard.cs</DependentUpon>
+    <EmbeddedResource Include="frmThongKeDoanhThu.resx">
+      <DependentUpon>frmThongKeDoanhThu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmChiTietHoaDon.resx">
       <DependentUpon>frmChiTietHoaDon.cs</DependentUpon>
