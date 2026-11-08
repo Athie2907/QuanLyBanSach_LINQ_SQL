@@ -55,7 +55,7 @@
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chrtDoanhThu.Series.Add(series1);
-            this.chrtDoanhThu.Size = new System.Drawing.Size(873, 496);
+            this.chrtDoanhThu.Size = new System.Drawing.Size(776, 397);
             this.chrtDoanhThu.TabIndex = 0;
             this.chrtDoanhThu.Text = "chart1";
             this.chrtDoanhThu.Click += new System.EventHandler(this.chrtDoanhThu_Click);
@@ -63,19 +63,20 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(45, 19);
+            this.label1.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(42, 12);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(82, 20);
+            this.label1.Size = new System.Drawing.Size(77, 18);
             this.label1.TabIndex = 1;
             this.label1.Text = "Xem theo:";
             // 
             // radTuanNay
             // 
             this.radTuanNay.AutoSize = true;
-            this.radTuanNay.Location = new System.Drawing.Point(165, 19);
-            this.radTuanNay.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.radTuanNay.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radTuanNay.Location = new System.Drawing.Point(151, 10);
             this.radTuanNay.Name = "radTuanNay";
-            this.radTuanNay.Size = new System.Drawing.Size(112, 24);
+            this.radTuanNay.Size = new System.Drawing.Size(103, 22);
             this.radTuanNay.TabIndex = 2;
             this.radTuanNay.TabStop = true;
             this.radTuanNay.Text = "7 ngày qua";
@@ -85,10 +86,10 @@
             // radThangNay
             // 
             this.radThangNay.AutoSize = true;
-            this.radThangNay.Location = new System.Drawing.Point(344, 19);
-            this.radThangNay.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.radThangNay.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radThangNay.Location = new System.Drawing.Point(297, 9);
             this.radThangNay.Name = "radThangNay";
-            this.radThangNay.Size = new System.Drawing.Size(108, 24);
+            this.radThangNay.Size = new System.Drawing.Size(100, 22);
             this.radThangNay.TabIndex = 3;
             this.radThangNay.TabStop = true;
             this.radThangNay.Text = "Tháng này";
@@ -97,15 +98,14 @@
             // 
             // btnThongKe
             // 
-            this.btnThongKe.BackColor = System.Drawing.Color.LightSteelBlue;
-            this.btnThongKe.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnThongKe.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.btnThongKe.Location = new System.Drawing.Point(619, 9);
-            this.btnThongKe.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnThongKe.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnThongKe.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnThongKe.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.btnThongKe.Location = new System.Drawing.Point(552, 4);
             this.btnThongKe.Name = "btnThongKe";
             this.btnThongKe.Size = new System.Drawing.Size(115, 40);
             this.btnThongKe.TabIndex = 4;
-            this.btnThongKe.Text = "Thống kê";
+            this.btnThongKe.Text = "Thông kê";
             this.btnThongKe.UseVisualStyleBackColor = false;
             this.btnThongKe.Click += new System.EventHandler(this.btnThongKe_Click);
             // 

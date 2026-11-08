@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -27,6 +28,11 @@ namespace QuanLyBanSach_LINQ_SQL
                 new CotLuoi("SDT", "Số điện thoại", "SDT"),
                 new CotLuoi("DiaChi", "Địa chỉ", "DiaChi"));
 
+            // Cấu hình hiển thị tiêu đề in đậm và tắt style mặc định của Windows
+            dgvDanhSach.EnableHeadersVisualStyles = false;
+            dgvDanhSach.ColumnHeadersDefaultCellStyle.Font = new Font(dgvDanhSach.Font, FontStyle.Bold);
+
+            // Dùng CellClick thay vì CellContentClick để click vào bất cứ đâu trên dòng đều nhận
             dgvDanhSach.CellClick += dgvDanhSach_CellContentClick;
         }
 
@@ -44,7 +50,6 @@ namespace QuanLyBanSach_LINQ_SQL
             {
                 using (var db = LayDataContext())
                 {
-                    // Lấy toàn bộ danh sách nhà cung cấp khớp với sơ đồ DBML
                     var list = db.GetTable<tbl_nha_cung_cap>()
                         .Select(x => new
                         {
@@ -265,7 +270,6 @@ namespace QuanLyBanSach_LINQ_SQL
             txtDiaChi.Text = valDiaChi?.ToString() ?? "";
         }
 
-        // Giữ lại các sự kiện rỗng tránh lỗi nếu bạn đã lỡ click đúp trên Designer
         private void txtMa_TextChanged(object sender, EventArgs e) { }
         private void txtTen_TextChanged(object sender, EventArgs e) { }
         private void txtSDT_TextChanged(object sender, EventArgs e) { }

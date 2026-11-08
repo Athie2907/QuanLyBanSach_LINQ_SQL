@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -26,8 +27,9 @@ namespace QuanLyBanSach_LINQ_SQL
                 new CotLuoi("TenKH", "Tên khách hàng", "TenKH"),
                 new CotLuoi("SDT", "Số điện thoại", "SDT"),
                 new CotLuoi("DiaChi", "Địa chỉ", "DiaChi"));
+            dgvDanhSach.ColumnHeadersDefaultCellStyle.Font = new Font(dgvDanhSach.Font, FontStyle.Bold);
 
-            // Bấm vào dòng nào cũng chọn được (CellContentClick chỉ nhận khi bấm trúng chữ)
+            // Sử dụng CellClick thay vì CellContentClick để bấm vào bất kỳ vị trí nào trên dòng cũng nhận
             dgvDanhSach.CellClick += dgvDanhSach_CellContentClick;
         }
 
@@ -45,9 +47,9 @@ namespace QuanLyBanSach_LINQ_SQL
             {
                 using (var db = LayDataContext())
                 {
-                    // Lấy danh sách khách hàng duy nhất dựa theo số điện thoại hoặc tên từ tbl_hoa_don
+                    // Đã sửa lỗi: Thay string.IsNullOrEmpty bằng biểu thức so sánh phù hợp với LINQ to SQL
                     var list = db.GetTable<tbl_hoa_don>()
-                        .Where(h => !string.IsNullOrEmpty(h.ten_khach_hang))
+                        .Where(h => h.ten_khach_hang != null && h.ten_khach_hang != "")
                         .Select(h => new
                         {
                             TenKH = h.ten_khach_hang,
@@ -74,7 +76,7 @@ namespace QuanLyBanSach_LINQ_SQL
             }
         }
 
-        // button1 thường là nút THÊM KHÁCH HÀNG
+        // Nút THÊM KHÁCH HÀNG (button1)
         private void button1_Click(object sender, EventArgs e)
         {
             string tenKH = txtTen.Text.Trim();
@@ -146,15 +148,11 @@ namespace QuanLyBanSach_LINQ_SQL
             {
                 using (var db = LayDataContext())
                 {
-                    // Tìm các hóa đơn thuộc khách hàng này để cập nhật đồng bộ
                     string tenCu = txtTen.Tag == null ? "" : txtTen.Tag.ToString();
                     string sdtCu = sdtKhachHangDangChon ?? "";
 
-                    // Khách hàng cũ được nhận diện theo cặp (tên cũ, SĐT cũ). Không dùng "SĐT HOẶC tên" như trước
-                    // vì sẽ sửa nhầm luôn hóa đơn của khách khác trùng tên / trùng số.
                     var danhSachHD = db.GetTable<tbl_hoa_don>()
-                        .Where(x => x.ten_khach_hang == tenCu
-                                    && (x.sdt_khach_hang ?? "") == sdtCu)
+                        .Where(x => x.ten_khach_hang == tenCu && (x.sdt_khach_hang ?? "") == sdtCu)
                         .ToList();
 
                     if (danhSachHD.Count == 0)
@@ -205,7 +203,6 @@ namespace QuanLyBanSach_LINQ_SQL
 
                         var tableCT = db.GetTable<tbl_chi_tiet_hoa_don>();
 
-                        // Kiểm tra nếu khách hàng đã có chi tiết hóa đơn (đã mua sách) thì không cho xóa
                         bool daMuaHang = hoaDons.Any(hd => tableCT.Any(ct => ct.ma_hoa_don == hd.ma_hoa_don));
                         if (daMuaHang)
                         {
@@ -248,21 +245,17 @@ namespace QuanLyBanSach_LINQ_SQL
 
             var row = dgvDanhSach.Rows[e.RowIndex];
 
-            // 1. Lấy STT hiển thị lên ô Mã
             object valMa = row.Cells["STT"]?.Value ?? row.Cells[0].Value;
             txtMa.Text = valMa?.ToString() ?? "";
 
-            // 2. Lấy tên khách hàng
             object valTen = row.Cells["TenKH"]?.Value ?? (row.Cells.Count > 1 ? row.Cells[1].Value : null);
             txtTen.Text = valTen?.ToString() ?? "";
-            txtTen.Tag = txtTen.Text; // Lưu tên cũ để dùng cho chức năng sửa
+            txtTen.Tag = txtTen.Text;
 
-            // 3. Lấy số điện thoại
             object valSDT = row.Cells["SDT"]?.Value ?? (row.Cells.Count > 2 ? row.Cells[2].Value : null);
             txtSDT.Text = valSDT?.ToString() == "Chưa có" ? "" : valSDT?.ToString() ?? "";
             sdtKhachHangDangChon = txtSDT.Text;
 
-            // 4. Lấy địa chỉ
             object valDiaChi = row.Cells["DiaChi"]?.Value ?? (row.Cells.Count > 3 ? row.Cells[3].Value : null);
             txtDiaChi.Text = valDiaChi?.ToString() ?? "";
         }
